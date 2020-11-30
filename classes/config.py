@@ -9,6 +9,7 @@ class Config:
                 self.username = data['username']
                 self.password = data['password']
                 self.igPost_url = data['ig_post_url']
+                self.comment_format = data['comment_format']
                 self.sessionComments = data['sessionComments']
                 self.perHourComments = data['perHourComments']
 

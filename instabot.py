@@ -40,6 +40,12 @@ commentsCounter = 0
 minuteBreakComments = 0
 hourBreakComments = 0
 
+def getRandomTag(match, taglist):
+    index = random.randint(0, len(taglist)-1)
+    tag = taglist[index]
+    taglist.remove(tag)
+    return tag
+
 class InstaBot:
     def __init__(self, c):
         self.config = c
@@ -112,14 +118,19 @@ class InstaBot:
         global commentsCounter, hourBreakComments
 
         # clone the global tags variable
-        temp_tags = list(self.config.tags)
+        tags = list(self.config.tags)
 
-        # fill in comment with 3 random tags
-        comment = ''
+        # fill in comment with comment_format
+        tag_count = self.config.comment_format.count('[tag]')
+        format_tag = self.config.comment_format.replace('[tag]', '{}')
+        comment = format_tag.format(*('@' + tags[random.randint(0, len(tags)-1)] for _ in range(tag_count)))
+
+        """
         for i in range(0, 3):
-            index = random.randint(0, len(temp_tags)-1)
-            comment = comment + '@' + temp_tags[index] + ' '
-            temp_tags.remove(temp_tags[index])
+            index = random.randint(0, len(tags)-1)
+            comment = comment + '@' + tags[index] + ' '
+            tags.remove(tags[index])
+        """
 
         # find instagram post
         logger.debug('Getting Instagram post URL...')

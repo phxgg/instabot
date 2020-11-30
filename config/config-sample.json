@@ -6,6 +6,8 @@
 
     "ig_post_url": "Link to instagram post",
 
+    "comment_format": "[tag] [tag] 42 euro size",
+
     "sessionComments": 5,
     "perHourComments": 100
 }
