@@ -1,14 +1,14 @@
-'''
+"""
 Made by phxgg (https://github.com/phxgg)
 
 TODO: see README.md
 
 [This script on average posts 500-600 comments in 24 hours.]
-Please note that Instagram has limits regarding likes, comments and account activity in general.
-This means that this script might not be 100% accurate regarding Instagram limits.
+Please note that Instagram can limit an account's likes, comments and activity in general.
+This script cannot be 100% accurate regarding Instagram limits.
 There is a chance that your account might be locked, limited or even banned.
 Use this at your own risk.
-'''
+"""
 
 from time import sleep
 import random
