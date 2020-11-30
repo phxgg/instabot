@@ -1,0 +1,11 @@
+{
+    "debug": false,
+
+    "username": "your.ig.username",
+    "password": "your.ig.password",
+
+    "ig_post_url": "Link to instagram post",
+
+    "sessionComments": 5,
+    "perHourComments": 100
+}
