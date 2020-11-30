@@ -1,10 +1,10 @@
-# kopsialis
+# InstaBot
 
 ### *This is under construction*
 
-Giveaway auto commenting bot for Instagram.
+Auto commenting bot for Instagram.
 
-Works only on multi-participation allowed giveaways.
+Works great on multi-participation allowed giveaways.
 
 # Installation
 1. Install Python 3.8 (or later) & pip from https://www.python.org/
