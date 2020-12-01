@@ -4,5 +4,6 @@ config/config.json
 config/tags.txt
 classes/driversetup.py
 classes/__pycache__
+comments.log
 debug.log
 test.py
