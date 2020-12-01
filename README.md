@@ -19,11 +19,16 @@ You could also set `debug` to true or `keepCommentLogs` to true, to get debug me
 If you are not aware of other variables in `config.json`, I would suggest not edit anything else.
 4. Create a `tags.txt` file inside the `config` folder. Each line in this file will be a new tag in your tags list.
 
+<u>Note:</u> The more tags you use, the safer your account will be.
+This is because Instagram will limit accounts that make the same comment over and over again,
+so less tags means you're most likely to make a comment you have already made before.
+
 # ToDo
 1. Auto download ChromeDriver if it does not exist.
 2. <s>Random time between each letter in InstaBot.typePhrase()</s>
 3. Allow user to create, inside `config.json`, the format of comment that will be used.<br>
 Example: `[tag] [tag] 42 euro size`
-4. Make a specific number of comments per day to prevent Instagram from limiting.
-5. Self-updating application.
-6. Support for Firefox browser.
+4. Option to get tags from followings/followers instead of using `tags.txt`.
+5. Make a specific number of comments per day to prevent Instagram from limiting.
+6. Self-updating application.
+7. Support for Firefox browser.
