@@ -32,11 +32,8 @@ updater = Updater()
 config = Config('./config/config.json')
 logger = Logger(config.debug, config.keepCommentLogs)
 
-width = str(GetSystemMetrics(0))
-height = str(GetSystemMetrics(1))
-
-config.width = width
-config.height = height
+config.width = str(GetSystemMetrics(0))
+config.height = str(GetSystemMetrics(1))
 
 commentsCounter = 0
 minuteBreakComments = 0
