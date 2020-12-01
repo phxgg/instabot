@@ -2,10 +2,14 @@ import json
 
 class Config:
     def __init__(self, configJson):
+        width = ''
+        height = ''
+
         try:
             with open(configJson) as f_config:
                 data = json.load(f_config)
                 self.debug = data['debug']
+                self.keepCommentLogs = data['keepCommentLogs']
                 self.username = data['username']
                 self.password = data['password']
                 self.igPost_url = data['ig_post_url']

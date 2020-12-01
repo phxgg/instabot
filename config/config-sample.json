@@ -1,5 +1,6 @@
 {
     "debug": false,
+    "keepCommentLogs": false,
 
     "username": "your.ig.username",
     "password": "your.ig.password",
