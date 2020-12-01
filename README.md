@@ -24,6 +24,6 @@ If you are not aware of other variables in `config.json`, I would suggest not ed
 2. <s>Random time between each letter in InstaBot.typePhrase()</s>
 3. Allow user to create, inside `config.json`, the format of comment that will be used.<br>
 Example: `[tag] [tag] 42 euro size`
-4. Run worker for 8 hours and have a break of 8 hours each time to prevent limits. Check if this is valid with the HOUR break.
+4. Make a specific number of comments per day to prevent Instagram from limiting.
 5. Self-updating application.
 6. Support for Firefox browser.
