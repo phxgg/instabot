@@ -264,7 +264,7 @@ while True:
         countCommentsFile.truncate()
         countCommentsFile.write(str(commentsCounter))
     except:
-        quitJobs('Early temrination of InstaBot!')
+        quitJobs('Early termination of InstaBot!')
 
 quitJobs('InstaBot exited successfully.')
 
