@@ -237,8 +237,8 @@ my_bot = InstaBot(config)
 # open counter file to keep updating the counter
 countCommentsFile = open('./counter.txt', 'a')
 
-while True:
-    try:
+try:
+    while True:
         # hour break
         if hourBreakComments >= config.perHourComments:
             print('[*] HOUR break')
@@ -263,8 +263,8 @@ while True:
         countCommentsFile.seek(0)
         countCommentsFile.truncate()
         countCommentsFile.write(str(commentsCounter))
-    except:
-        quitJobs('Early termination of InstaBot!')
+except:
+    quitJobs('Early termination of InstaBot!')
 
 quitJobs('InstaBot exited successfully.')
 
