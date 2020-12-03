@@ -50,6 +50,8 @@ class InstaBot:
         logger.debug('Setting up ChromeOptions...')
         logger.debug('Found Monitor Size: ' + self.config.width + 'x' + self.config.height)
         
+        user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
+
         self.chrome_options = webdriver.ChromeOptions()
         self.chrome_options.add_argument('--window-size=' + self.config.width + ',' + self.config.height)
         self.chrome_options.add_argument('--disable-extensions')
@@ -57,6 +59,7 @@ class InstaBot:
         #self.chrome_options.add_argument("--proxy-bypass-list=*")
         self.chrome_options.add_argument('--start-maximized')
         self.chrome_options.add_argument('--headless')
+        self.chrome_options.add_argument('--user-agent=' + user_agent)
         self.chrome_options.add_argument('--disable-gpu')
         self.chrome_options.add_argument('--disable-dev-shm-usage')
         self.chrome_options.add_argument('--no-sandbox')
