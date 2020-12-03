@@ -264,11 +264,11 @@ while True:
         countCommentsFile.truncate()
         countCommentsFile.write(str(commentsCounter))
     except:
-        print("InstaBot terminated.")
-        quitJobs()
+        quitJobs('Early temrination of InstaBot!')
 
-quitJobs()
+quitJobs('InstaBot exited successfully.')
 
-def quitJobs()
+def quitJobs(msg)
+    print(msg)
     countCommentsFile.close()
     my_bot.quit()
