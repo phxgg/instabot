@@ -66,6 +66,15 @@ class InstaBot:
         self.chrome_options.add_argument('--ignore-certificate-errors')
         self.chrome_options.add_argument('--allow-running-insecure-content')
         self.chrome_options.add_argument('--log-level=3') # hide console warnings
+        
+        """
+        if sys.platform == 'linux' or sys.platform == 'linux2':
+            driver_file_name = 'chrome_linux'
+        elif sys.platform == 'win32':
+            driver_file_name = 'chrome_windows.exe'
+        elif sys.platform == 'darwin':
+            driver_file_name = 'chrome_mac'
+        """
 
         logger.debug('Loading Chrome driver...')
         self.driver = webdriver.Chrome('chromedriver', options=self.chrome_options)
@@ -229,29 +238,37 @@ my_bot = InstaBot(config)
 countCommentsFile = open('./counter.txt', 'a')
 
 while True:
-    # hour break
-    if hourBreakComments >= config.perHourComments:
-        print('[*] HOUR break')
-        minuteBreakComments = 0
-        hourBreakComments = 0
-        sleep(3600) # 1 hour
+    try:
+        # hour break
+        if hourBreakComments >= config.perHourComments:
+            print('[*] HOUR break')
+            minuteBreakComments = 0
+            hourBreakComments = 0
+            sleep(3600) # 1 hour
 
-    # minute break
-    if minuteBreakComments >= config.sessionComments:
-        print('[*] MINUTE break')
-        minuteBreakComments = 0
-        sleep(180) # 3 mins
-    
-    print('[*] Counter: ' + str(commentsCounter))
+        # minute break
+        if minuteBreakComments >= config.sessionComments:
+            print('[*] MINUTE break')
+            minuteBreakComments = 0
+            sleep(180) # 3 mins
+        
+        print('[*] Counter: ' + str(commentsCounter))
 
-    my_bot.comment()
+        my_bot.comment()
 
-    # we do not want to include these increments inside the comment() function because we want to go through the breaks to avoid instagram limits
-    minuteBreakComments = minuteBreakComments + 1
-    hourBreakComments = hourBreakComments + 1
+        # we do not want to include these increments inside the comment() function because we want to go through the breaks to avoid instagram limits
+        minuteBreakComments = minuteBreakComments + 1
+        hourBreakComments = hourBreakComments + 1
 
-    countCommentsFile.seek(0)
-    countCommentsFile.truncate()
-    countCommentsFile.write(str(commentsCounter))
+        countCommentsFile.seek(0)
+        countCommentsFile.truncate()
+        countCommentsFile.write(str(commentsCounter))
+    except:
+        print("InstaBot terminated.")
+        quitJobs()
 
-my_bot.quit()
+quitJobs()
+
+def quitJobs()
+    countCommentsFile.close()
+    my_bot.quit()
