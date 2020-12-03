@@ -268,7 +268,7 @@ while True:
 
 quitJobs('InstaBot exited successfully.')
 
-def quitJobs(msg)
+def quitJobs(msg):
     print(msg)
     countCommentsFile.close()
     my_bot.quit()
