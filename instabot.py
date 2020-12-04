@@ -120,7 +120,7 @@ class InstaBot:
         # check for Suspicious Login Attempt
         if self.suspiciousLoginAttempt():
             logger.error('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
-            quitJobs('Suspicious Login Attempt found', [countCommentsFile], self)
+            exitApp('Suspicious Login Attempt found', [countCommentsFile], self)
 
         # bypass One Tap when logged in
         logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')
@@ -304,6 +304,6 @@ try:
         countCommentsFile.truncate()
         countCommentsFile.write(str(commentsCounter))
 except:
-    quitJobs('Early termination of InstaBot!', [countCommentsFile], my_bot)
+    exitApp('Early termination of InstaBot!', [countCommentsFile], my_bot)
 
-quitJobs('InstaBot exited successfully.', [countCommentsFile], my_bot)
+exitApp('InstaBot exited successfully.', [countCommentsFile], my_bot)

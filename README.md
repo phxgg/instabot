@@ -29,6 +29,7 @@ so less tags means you're most likely to make a comment you have already made be
 * Option to get tags from followings/followers instead of using `tags.txt`.
 * Enable maximum number of comments per day to prevent Instagram from limiting.
 * Cross-platform availability.
+* User-Agent selection depending on the platform.
 * Auto download ChromeDriver binaries if it does not exist.
 * Self-updating application.
 * Support for Firefox browser.
