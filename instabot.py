@@ -255,21 +255,21 @@ def safe_execute(default, exception, function, *args):
         return default
 
 # close everything before quitting the application
-def quitJobs(msg, openFiles, igBot):
-    print(msg)
-    for f in openFiles:
-        safe_execute('Object probably not a file', Exception, f.close)
-    igBot.quit()
-    sys.exit()
+def exitApp(msg = None, openFiles = [], igBot = None):
+    if openFiles:
+        for f in openFiles:
+            safe_execute('Object probably not a file', Exception, f.close)
+    if igBot:
+        igBot.quit()
+    sys.exit(msg if msg else 0)
 
 # load comment counter
 try:
     with open('./counter.txt') as countCommentsFile:
         commentsCounter = int(countCommentsFile.read())
 except Exception as e:
-    print("An error occured when trying to open counter.txt")
     print(e)
-    sys.exit()
+    sys.exit('An error occured when trying to open counter.txt')
 
 # open counter file to keep updating the counter
 countCommentsFile = open('./counter.txt', 'a')
