@@ -25,6 +25,7 @@ so less tags means you're most likely to make a comment you have already made be
 
 # ToDo
 * Create a `start()` method in the `InstaBot` class and do the work there.
+* Create a `Helper` class and keep certain functions there.
 * Option to get tags from followings/followers instead of using `tags.txt`.
 * Enable maximum number of comments per day to prevent Instagram from limiting.
 * Cross-platform availability.
