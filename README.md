@@ -24,11 +24,13 @@ This is because Instagram will limit accounts that make the same comment over an
 so less tags means you're most likely to make a comment you have already made before.
 
 # ToDo
-1. Auto download ChromeDriver if it does not exist.
-2. <s>Random time between each letter in InstaBot.typePhrase()</s>
-3. Allow user to create, inside `config.json`, the format of comment that will be used.<br>
-Example: `[tag] [tag] 42 euro size`
-4. Option to get tags from followings/followers instead of using `tags.txt`.
-5. Make a specific number of comments per day to prevent Instagram from limiting.
-6. Self-updating application.
-7. Support for Firefox browser.
+* Create a `start()` method in the `InstaBot` class and do the work there.
+* Option to get tags from followings/followers instead of using `tags.txt`.
+* Enable maximum number of comments per day to prevent Instagram from limiting.
+* Cross-platform availability.
+* Auto download ChromeDriver binaries if it does not exist.
+* Self-updating application.
+* Support for Firefox browser.
+* <s>Random time between each letter in `InstaBot.typePhrase()`</s>
+* <s>Allow user to create, inside `config.json`, the format of comment that will be used.<br>
+Example: `[tag] [tag] 42 euro size`</s>
