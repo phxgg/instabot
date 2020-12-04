@@ -258,6 +258,7 @@ def safe_execute(default, exception, function, *args):
 def exitApp(msg = None, openFiles = [], igBot = None):
     if openFiles:
         for f in openFiles:
+            #f.close()
             safe_execute('Object probably not a file', Exception, f.close)
     if igBot:
         igBot.quit()
@@ -274,10 +275,12 @@ except Exception as e:
 # open counter file to keep updating the counter
 countCommentsFile = open('./counter.txt', 'a')
 
-# initialize bot
-my_bot = InstaBot(config)
+my_bot = None
 
 try:
+    # initialize bot
+    my_bot = InstaBot(config)
+
     while True:
         # hour break
         if hourBreakComments >= config.perHourComments:
@@ -303,7 +306,7 @@ try:
         countCommentsFile.seek(0)
         countCommentsFile.truncate()
         countCommentsFile.write(str(commentsCounter))
-except:
+except KeyboardInterrupt:
     exitApp('Early termination of InstaBot!', [countCommentsFile], my_bot)
 
 exitApp('InstaBot exited successfully.', [countCommentsFile], my_bot)
