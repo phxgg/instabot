@@ -44,7 +44,6 @@ class InstaBot:
         self.config = config
         self.logger = Logger(self.config.debug, self.config.keepCommentLogs)
 
-        # initialize logger
         logger.info('Initializing InstaBot...')
 
         logger.debug('Setting up ChromeOptions...')
@@ -307,6 +306,6 @@ try:
         countCommentsFile.truncate()
         countCommentsFile.write(str(commentsCounter))
 except KeyboardInterrupt:
-    exitApp('Early termination of InstaBot!', [countCommentsFile], my_bot)
+    exitApp('Early termination of InstaBot.', [countCommentsFile], my_bot)
 
-exitApp('InstaBot exited successfully.', [countCommentsFile], my_bot)
+exitApp('InstaBot exited successfully!', [countCommentsFile], my_bot)
