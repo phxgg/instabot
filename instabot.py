@@ -1,4 +1,4 @@
-"""
+'''
 Made by phxgg (https://github.com/phxgg)
 
 TODO: see README.md
@@ -7,7 +7,7 @@ Please note that Instagram can limit an account's likes, comments and activity i
 This script cannot be 100% accurate regarding Instagram limits.
 There is a chance that your account might be locked, limited or even banned.
 Use this at your own risk.
-"""
+'''
 
 from time import sleep
 import random
@@ -50,7 +50,9 @@ class InstaBot:
         logger.debug('Setting up ChromeOptions...')
         logger.debug('Found Monitor Size: ' + self.config.width + 'x' + self.config.height)
         
-        user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
+        ua_mac = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
+        ua_windows = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
+        ua_linux = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
 
         self.chrome_options = webdriver.ChromeOptions()
         self.chrome_options.add_argument('--window-size=' + self.config.width + ',' + self.config.height)
@@ -59,7 +61,7 @@ class InstaBot:
         #self.chrome_options.add_argument("--proxy-bypass-list=*")
         self.chrome_options.add_argument('--start-maximized')
         self.chrome_options.add_argument('--headless')
-        self.chrome_options.add_argument('--user-agent=' + user_agent)
+        self.chrome_options.add_argument('--user-agent=' + ua_windows)
         self.chrome_options.add_argument('--disable-gpu')
         self.chrome_options.add_argument('--disable-dev-shm-usage')
         self.chrome_options.add_argument('--no-sandbox')
@@ -90,8 +92,8 @@ class InstaBot:
         sleep(2)
         
         # click the button to get into Login page
-        logger.debug('Clicking on the "Log in" button...')
-        self.driver.find_element_by_xpath('//a[contains(text(), "Log in")]').click()
+        logger.debug('Clicking on the "Log In" button...')
+        self.driver.find_element_by_xpath('//a[contains(text(), "Log In")]').click()
         sleep(3)
 
         # input username & password and click the login button
@@ -115,6 +117,11 @@ class InstaBot:
         else:
             logger.debug('Successfully logged in!')
 
+        # check for Suspicious Login Attempt
+        if self.suspiciousLoginAttempt():
+            logger.error('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
+            quitJobs('Suspicious Login Attempt found', [countCommentsFile], self)
+
         # bypass One Tap when logged in
         logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')
         self.driver.find_element_by_xpath('//button[contains(text(), "Not Now")]').click()
@@ -131,12 +138,12 @@ class InstaBot:
         format_tag = self.config.comment_format.replace('[tag]', '{}')
         comment = format_tag.format(*('@' + self.getRandomTag(tags) for _ in range(tag_count))) #tags[random.randint(0, len(tags)-1)]
 
-        """
+        '''
         for i in range(0, 3):
             index = random.randint(0, len(tags)-1)
             comment = comment + '@' + tags[index] + ' '
             tags.remove(tags[index])
-        """
+        '''
 
         # find instagram post
         logger.debug('Getting Instagram post URL...')
@@ -178,6 +185,24 @@ class InstaBot:
         tag = tags[index]
         tags.remove(tag) # delete tag from the temporary variable. We do not want to show the same tag more than once
         return tag
+
+    def suspiciousLoginAttempt(self):
+        flag = False
+
+        # find "Suspicious Login Attempt" text
+        try:
+            self.driver.find_element_by_xpath('//p[contains(text(), "Suspicious Login Attempt")]')
+            flag = True
+        except:
+            pass
+
+        try:
+            self.driver.find_element_by_xpath('//h2[contains(text(), "We Detected An Unusual Login Attempt")]')
+            flag = True
+        except:
+            pass
+
+        return flag
 
     def canLogin(self):
         try:
@@ -222,6 +247,21 @@ class InstaBot:
     def quit(self):
         self.driver.quit()
 
+# safe execute
+def safe_execute(default, exception, function, *args):
+    try:
+        return function(*args)
+    except exception:
+        return default
+
+# close everything before quitting the application
+def quitJobs(msg, openFiles, igBot):
+    print(msg)
+    for f in openFiles:
+        safe_execute('Object probably not a file', Exception, f.close)
+    igBot.quit()
+    sys.exit()
+
 # load comment counter
 try:
     with open('./counter.txt') as countCommentsFile:
@@ -231,11 +271,11 @@ except Exception as e:
     print(e)
     sys.exit()
 
-# initialize bot
-my_bot = InstaBot(config)
-
 # open counter file to keep updating the counter
 countCommentsFile = open('./counter.txt', 'a')
+
+# initialize bot
+my_bot = InstaBot(config)
 
 try:
     while True:
@@ -264,11 +304,6 @@ try:
         countCommentsFile.truncate()
         countCommentsFile.write(str(commentsCounter))
 except:
-    quitJobs('Early termination of InstaBot!')
+    quitJobs('Early termination of InstaBot!', [countCommentsFile], my_bot)
 
-quitJobs('InstaBot exited successfully.')
-
-def quitJobs(msg):
-    print(msg)
-    countCommentsFile.close()
-    my_bot.quit()
+quitJobs('InstaBot exited successfully.', [countCommentsFile], my_bot)
