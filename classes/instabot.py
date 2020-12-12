@@ -9,6 +9,7 @@ import random
 import os
 import sys
 
+from .helper import Helper
 from .config import Config
 from .counter import Counter
 from .logger import Logger
@@ -52,11 +53,11 @@ class InstaBot:
         self.chrome_options.add_argument('--log-level=3') # hide console warnings
         
         '''
-        if sys.platform == 'linux' or sys.platform == 'linux2':
+        if Helper.getPlatform() == 'linux' or Helper.getPlatform() == 'linux2':
             driver_file_name = 'chrome_linux'
-        elif sys.platform == 'win32':
+        elif Helper.getPlatform() == 'win32':
             driver_file_name = 'chrome_windows.exe'
-        elif sys.platform == 'darwin':
+        elif Helper.getPlatform() == 'darwin':
             driver_file_name = 'chrome_mac'
         '''
 
@@ -102,7 +103,7 @@ class InstaBot:
         # check for Suspicious Login Attempt
         if self.suspiciousLoginAttempt():
             self.logger.error('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
-            exitApp('Suspicious Login Attempt found', [self.counter.countCommentsFile], self)
+            Helper.exitApp('Suspicious Login Attempt found', [self.counter.countCommentsFile], self)
 
         # bypass One Tap when logged in
         self.logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')

@@ -2,6 +2,7 @@ __pycache__/
 1not_used/
 config/config.json
 config/tags.txt
+config/tags.old.txt
 classes/driversetup.py
 classes/__pycache__
 comments.log

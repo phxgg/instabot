@@ -26,8 +26,8 @@ This is because Instagram will limit accounts that make the same comment over an
 so less tags means you're most likely to make a comment you have already made before.
 
 # ToDo
-* Create a `start()` method in the `InstaBot` class and do the work there.
-* Create a `Helper` class and keep certain functions there.
+* <s>Create a `start()` method in the `InstaBot` class and do the work there.</s>
+* <s>Create a `Helper` class and keep certain functions there.</s>
 * Option to get tags from followings/followers instead of using `tags.txt`.
 * Enable maximum number of comments per day to prevent Instagram from limiting.
 * Cross-platform availability.
