@@ -9,6 +9,8 @@ There is a chance that your account might be locked, limited or even banned.
 Use this at your own risk.
 '''
 
+import sys
+
 from classes.config import Config
 from classes.updater import Updater
 #from classes.driversetup import DriverSetup

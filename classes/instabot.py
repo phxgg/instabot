@@ -28,11 +28,9 @@ class InstaBot:
         self.logger = Logger(self.config.debug, self.config.keepCommentLogs)
         self.counter = Counter()
         
-        self.logger.debug('Found Monitor Size: ' + self.config.width + 'x' + self.config.height)
-
         self.logger.info('Initializing InstaBot...')
-
         self.logger.debug('Setting up ChromeOptions...')
+        self.logger.debug('Found Monitor Size: ' + self.config.width + 'x' + self.config.height)
         
         ua_mac = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
         ua_windows = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
@@ -44,7 +42,7 @@ class InstaBot:
         #self.chrome_options.add_argument("--proxy-server='direct://'") # not sure if needed so i commented these two out
         #self.chrome_options.add_argument("--proxy-bypass-list=*")
         self.chrome_options.add_argument('--start-maximized')
-        #self.chrome_options.add_argument('--headless')
+        self.chrome_options.add_argument('--headless')
         self.chrome_options.add_argument('--user-agent=' + ua_windows)
         self.chrome_options.add_argument('--disable-gpu')
         self.chrome_options.add_argument('--disable-dev-shm-usage')
@@ -53,14 +51,14 @@ class InstaBot:
         self.chrome_options.add_argument('--allow-running-insecure-content')
         self.chrome_options.add_argument('--log-level=3') # hide console warnings
         
-        """
+        '''
         if sys.platform == 'linux' or sys.platform == 'linux2':
             driver_file_name = 'chrome_linux'
         elif sys.platform == 'win32':
             driver_file_name = 'chrome_windows.exe'
         elif sys.platform == 'darwin':
             driver_file_name = 'chrome_mac'
-        """
+        '''
 
         self.logger.debug('Loading Chrome driver...')
         self.driver = webdriver.Chrome('chromedriver', options=self.chrome_options)
