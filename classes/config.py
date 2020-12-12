@@ -1,10 +1,8 @@
+from win32api import GetSystemMetrics
 import json
 
 class Config:
     def __init__(self, configJson):
-        width = ''
-        height = ''
-
         try:
             with open(configJson) as f_config:
                 data = json.load(f_config)
@@ -17,7 +15,7 @@ class Config:
                 self.sessionComments = data['sessionComments']
                 self.perHourComments = data['perHourComments']
 
-                self.tags = []
+            self.tags = []
 
             with open('./config/tags.txt') as f_tags:
                 for tag in f_tags:
@@ -26,3 +24,6 @@ class Config:
             print("An error occured while initializing Config.")
             print(e)
             sys.exit()
+
+        self.width = str(GetSystemMetrics(0))
+        self.height = str(GetSystemMetrics(1))
