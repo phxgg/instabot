@@ -20,21 +20,22 @@ If you are not aware of other variables in `config.json`, I would suggest not ed
 4. Create a `tags.txt` file inside the `config` folder. Each line in this file will be a new tag in your tags list.
 
 <u><b>Notes:</b></u>
-* You need to have 2FA disabled.
+* You need to have 2FA disabled on your Instagram account.
 * The more tags you use, the safer your account will be.
 This is because Instagram will limit accounts that make the same comment over and over again,
 so less tags means you're most likely to make a comment you have already made before.
 
 # ToDo
-* <s>Create a `start()` method in the `InstaBot` class and do the work there.</s>
-* <s>Create a `Helper` class and keep certain functions there.</s>
-* Option to get tags from followings/followers instead of using `tags.txt`.
-* Enable maximum number of comments per day to prevent Instagram from limiting.
-* Cross-platform availability.
-* User-Agent selection depending on the platform.
-* Auto download ChromeDriver binaries if it does not exist.
 * Self-updating application.
 * Support for Firefox browser.
+* Option to get tags from followings/followers instead of using `tags.txt`.
+* Enable maximum number of comments per day to prevent Instagram from limiting.
+* Auto download ChromeDriver binaries if it does not exist.<br>
+<i>(This might not work, because ChromeDriver gave an error that it needs to be in PATH. This means the user has to do that manually.)</i>
+* Cross-platform availability <i>(after the above is done)</i>
+* <s>Create a `start()` method in the `InstaBot` class and do the work there.</s>
+* <s>Create a `Helper` class and keep certain functions there.</s>
+* <s>User-Agent selection depending on the platform.</s>
 * <s>Random time between each letter in `InstaBot.typePhrase()`</s>
 * <s>Allow user to create, inside `config.json`, the format of comment that will be used.<br>
 Example: `[tag] [tag] 42 euro size`</s>

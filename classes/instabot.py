@@ -32,10 +32,6 @@ class InstaBot:
         self.logger.info('Initializing InstaBot...')
         self.logger.debug('Setting up ChromeOptions...')
         self.logger.debug('Found Monitor Size: ' + self.config.width + 'x' + self.config.height)
-        
-        ua_mac = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
-        ua_windows = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
-        ua_linux = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
 
         self.chrome_options = webdriver.ChromeOptions()
         self.chrome_options.add_argument('--window-size=' + self.config.width + ',' + self.config.height)
@@ -44,25 +40,16 @@ class InstaBot:
         #self.chrome_options.add_argument("--proxy-bypass-list=*")
         self.chrome_options.add_argument('--start-maximized')
         self.chrome_options.add_argument('--headless')
-        self.chrome_options.add_argument('--user-agent=' + ua_windows)
+        self.chrome_options.add_argument('--user-agent=' + Helper.getUserAgent())
         self.chrome_options.add_argument('--disable-gpu')
         self.chrome_options.add_argument('--disable-dev-shm-usage')
         self.chrome_options.add_argument('--no-sandbox')
         self.chrome_options.add_argument('--ignore-certificate-errors')
         self.chrome_options.add_argument('--allow-running-insecure-content')
         self.chrome_options.add_argument('--log-level=3') # hide console warnings
-        
-        '''
-        if Helper.getPlatform() == 'linux' or Helper.getPlatform() == 'linux2':
-            driver_file_name = 'chrome_linux'
-        elif Helper.getPlatform() == 'win32':
-            driver_file_name = 'chrome_windows.exe'
-        elif Helper.getPlatform() == 'darwin':
-            driver_file_name = 'chrome_mac'
-        '''
 
         self.logger.debug('Loading Chrome driver...')
-        self.driver = webdriver.Chrome('chromedriver', options=self.chrome_options)
+        self.driver = webdriver.Chrome(Helper.getDriverName(), options=self.chrome_options)
 
         # get instagram post
         self.logger.debug('Getting the Instagram post URL...')
