@@ -85,7 +85,7 @@ class InstaBot:
             sleep(1800)
             self.logger.info('Done waiting. Trying again...')
         else:
-            self.logger.debug('Successfully logged in!')
+            self.logger.debug('Successfully logged in: ' + self.config.username)
 
         # check for Suspicious Login Attempt
         if self.suspiciousLoginAttempt():
