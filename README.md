@@ -17,7 +17,7 @@ Works great on multi-participation allowed giveaways.
 2. In `config.json` fill in your username and password in the corresponding fields. Also fill in the Instagram post URL.<br>
 You could also set `debug` to true or `keepCommentLogs` to true, to get debug messages or keep logs of the posted comments.<br>
 If you are not aware of other variables in `config.json`, I would suggest not edit anything else.
-4. Create a `tags.txt` file inside the `config` folder. Each line in this file will be a new tag in your tags list.
+3. Create a `tags.txt` file inside the `config` folder. Each line in this file will be a new tag in your tags list.
 
 <u><b>Notes:</b></u>
 * You need to have 2FA disabled on your Instagram account.
