@@ -81,7 +81,7 @@ class InstaBot:
 
         # check if the account has been locked. If so, we have to wait for some time to re-try logging in
         if not self.canLogin():
-            self.logger.error('Cannot login! Waiting for 30 minutes...')
+            self.logger.error('Cannot login! Waiting for 30 minutes. Also make sure your username & password combination is correct')
             sleep(1800)
             self.logger.info('Done waiting. Trying again...')
         else:
