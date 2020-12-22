@@ -36,8 +36,6 @@ class InstaBot:
         self.chrome_options = webdriver.ChromeOptions()
         self.chrome_options.add_argument('--window-size=' + self.config.width + ',' + self.config.height)
         self.chrome_options.add_argument('--disable-extensions')
-        #self.chrome_options.add_argument("--proxy-server='direct://'") # not sure if needed so i commented these two out
-        #self.chrome_options.add_argument("--proxy-bypass-list=*")
         self.chrome_options.add_argument('--start-maximized')
         self.chrome_options.add_argument('--headless')
         self.chrome_options.add_argument('--user-agent=' + Helper.getUserAgent())
@@ -51,6 +49,8 @@ class InstaBot:
         self.logger.debug('Loading Chrome driver...')
         self.driver = webdriver.Chrome(Helper.getDriverName(), options=self.chrome_options)
 
+        #self.driver.maximize_window()
+
         # get instagram post
         self.logger.debug('Getting the Instagram post URL...')
         self.driver.get(self.config.igPost_url)
@@ -63,7 +63,8 @@ class InstaBot:
         
         # click the button to get into Login page
         self.logger.debug('Clicking on the "Log In" button...')
-        self.driver.find_element_by_xpath('//a[contains(text(), "Log In")]').click()
+        #self.driver.find_element_by_xpath('//a[contains(text(), "Log In")]').click()
+        self.driver.find_element_by_xpath('//button[contains(text(), "Log In")]').click()
         sleep(3)
 
         # input username & password and click the login button
@@ -141,7 +142,7 @@ class InstaBot:
         '''
 
         # find instagram post
-        self.logger.debug('Getting Instagram post URL...')
+        self.logger.debug('Redirecting to Instagram post URL...')
         self.driver.get(self.config.igPost_url)
         sleep(2)
 
