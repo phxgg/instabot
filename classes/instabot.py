@@ -26,7 +26,7 @@ class InstaBot:
         '''
         
         self.config = config
-        self.logger = Logger(self.config.debug, self.config.keepCommentLogs)
+        self.logger = Logger(self.config.debug, self.config.keep_comment_logs)
         self.counter = Counter()
         
         self.logger.info('Initializing InstaBot...')
@@ -53,7 +53,7 @@ class InstaBot:
 
         # get instagram post
         self.logger.debug('Getting the Instagram post URL...')
-        self.driver.get(self.config.igPost_url)
+        self.driver.get(self.config.ig_post_url)
         sleep(2)
 
         # click accept cookies
@@ -91,7 +91,7 @@ class InstaBot:
         # check for Suspicious Login Attempt
         if self.suspiciousLoginAttempt():
             self.logger.error('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
-            Helper.exitApp('Suspicious Login Attempt found', [self.counter.countCommentsFile], self)
+            Helper.exitApp('Suspicious Login Attempt found', [self.counter.count_comments_file], self)
 
         # bypass One Tap when logged in
         self.logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')
@@ -101,29 +101,29 @@ class InstaBot:
     def startBot(self):
         while True:
             # hour break
-            if self.counter.hourBreakComments >= self.config.perHourComments:
+            if self.counter.hour_break_comments >= self.config.per_hour_comments:
                 print('[*] HOUR break')
-                self.counter.minuteBreakComments = 0
-                self.counter.hourBreakComments = 0
+                self.counter.minute_break_comments = 0
+                self.counter.hour_break_comments = 0
                 sleep(3600) # 1 hour
 
             # minute break
-            if self.counter.minuteBreakComments >= self.config.sessionComments:
+            if self.counter.minute_break_comments >= self.config.session_comments:
                 print('[*] MINUTE break')
-                self.counter.minuteBreakComments = 0
+                self.counter.minute_break_comments = 0
                 sleep(180) # 3 mins
             
-            print('[*] Counter: ' + str(self.counter.commentsCounter))
+            print('[*] Counter: ' + str(self.counter.comments_counter))
 
             self.comment()
 
             # we do not want to include these increments inside the comment() function because we want to go through the breaks to avoid instagram limits
-            self.counter.minuteBreakComments = self.counter.minuteBreakComments + 1
-            self.counter.hourBreakComments = self.counter.hourBreakComments + 1
+            self.counter.minute_break_comments = self.counter.minute_break_comments + 1
+            self.counter.hour_break_comments = self.counter.hour_break_comments + 1
 
-            self.counter.countCommentsFile.seek(0)
-            self.counter.countCommentsFile.truncate()
-            self.counter.countCommentsFile.write(str(self.counter.commentsCounter))
+            self.counter.count_comments_file.seek(0)
+            self.counter.count_comments_file.truncate()
+            self.counter.count_comments_file.write(str(self.counter.comments_counter))
 
     def comment(self):
         # clone the global tags variable
@@ -143,7 +143,7 @@ class InstaBot:
 
         # find instagram post
         self.logger.debug('Redirecting to Instagram post URL...')
-        self.driver.get(self.config.igPost_url)
+        self.driver.get(self.config.ig_post_url)
         sleep(2)
 
         # get comment textarea and click on the input box. Doing this once, for some reason did not work so i had to do this twice.
@@ -167,11 +167,11 @@ class InstaBot:
         # check if post was successfully commented. Otherwise wait for 1 hour to kinda refresh the rate
         if not self.commentPosted():
             self.logger.error('Could not post comment! Waiting for 1 hour...')
-            self.counter.hourBreakComments = self.config.perHourComments # force an hour break
+            self.counter.hour_break_comments = self.config.per_hour_comments # force an hour break
         else:
             self.logger.writeComment(comment)
             self.logger.debug('Posted successfully!')
-            self.counter.commentsCounter = self.counter.commentsCounter + 1
+            self.counter.comments_counter = self.counter.comments_counter + 1
         
         #self.driver.execute_script("document.evaluate(\"//button[contains(text(), 'Post')]\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.removeAttribute(\"disabled\");")
         #sleep(2)

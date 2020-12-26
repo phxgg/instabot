@@ -1,21 +1,21 @@
 import sys
 
 class Counter:
-    commentsCounter = 0
-    minuteBreakComments = 0
-    hourBreakComments = 0
+    comments_counter = 0
+    minute_break_comments = 0
+    hour_break_comments = 0
 
-    countCommentsFile = None
+    count_comments_file = None
 
     def __init__(self):
         # load comment counter
         try:
             with open('./counter.txt') as countCommentsFile:
-                self.commentsCounter = int(countCommentsFile.read())
+                self.comments_counter = int(countCommentsFile.read())
         except Exception as e:
             print(e)
             sys.exit('An error occured when trying to open counter.txt')    
 
         # open counter file to keep updating the counter
-        self.countCommentsFile = open('./counter.txt', 'a')
+        self.count_comments_file = open('./counter.txt', 'a')
 

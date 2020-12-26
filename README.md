@@ -10,7 +10,7 @@ Works great on multi-participation allowed giveaways.
 1. Install Python 3.8 (or later) & pip from https://www.python.org/
 2. Use `pip install -r requirements.txt` to install the requirements.
 3. Download the latest stable release of ChromeDriver from https://chromedriver.chromium.org/<br>*[you will have to have Google Chrome installed and updated to latest version]*
-4. Include ChromeDriver path to your `PATH` system environment variable.
+4. Include ChromeDriver executable path to your `PATH` system environment variable.
 
 # How to use
 1. Rename `config-sample.json` to `config.json` and `tags-sample.txt` to `tags.txt` inside the `config` folder.
@@ -24,6 +24,10 @@ This is because Instagram will limit accounts that make the same comment over an
 so less tags means you're most likely to make a comment you have already made before.
 
 *More documentation coming soon.*
+
+# Bugs
+* It seems like the script won't work (cannot find html elements) on `--headless` mode in Windows 8.
+Should probably try different methods of grabbing elements.
 
 # ToDo
 * Self-updating application.
