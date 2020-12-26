@@ -1,6 +1,6 @@
 {
-    "debug": false,
-    "keepCommentLogs": false,
+    "debug": true,
+    "keepCommentLogs": true,
 
     "username": "your.ig.username",
     "password": "your.ig.password",
@@ -10,5 +10,5 @@
     "comment_format": "[tag] [tag] 42 euro size",
 
     "sessionComments": 5,
-    "perHourComments": 100
+    "perHourComments": 50
 }
