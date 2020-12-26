@@ -13,7 +13,7 @@ Works great on multi-participation allowed giveaways.
 4. Include ChromeDriver path to your `PATH` system environment variable.
 
 # How to use
-1. Rename `config-sample.json` to `config.json` inside the `config` folder.
+1. Rename `config-sample.json` to `config.json` and `tags-sample.txt` to `tags.txt` inside the `config` folder.
 2. In `config.json` fill in your username and password in the corresponding fields. Also fill in the Instagram post URL.<br>
 You could also set `debug` to true or `keepCommentLogs` to true, to get debug messages or keep logs of the posted comments.<br>
 If you are not aware of other variables in `config.json`, I would suggest not edit anything else.
