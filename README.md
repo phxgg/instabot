@@ -15,15 +15,15 @@ Works great on multi-participation allowed giveaways.
 # How to use
 1. Rename `config-sample.json` to `config.json` and `tags-sample.txt` to `tags.txt` inside the `config` folder.
 2. In `config.json` fill in your username and password in the corresponding fields. Also fill in the Instagram post URL.<br>
-You could also set `debug` to true or `keepCommentLogs` to true, to get debug messages or keep logs of the posted comments.<br>
-If you are not aware of other variables in `config.json`, I would suggest not edit anything else.
-3. Create a `tags.txt` file inside the `config` folder. Each line in this file will be a new tag in your tags list.
+3. In your `tags.txt` file, each line should be an Instagram username for your tag list.
 
 <u><b>Notes:</b></u>
 * You need to have 2FA disabled on your Instagram account.
 * The more tags you use, the safer your account will be.
 This is because Instagram will limit accounts that make the same comment over and over again,
 so less tags means you're most likely to make a comment you have already made before.
+
+*More documentation coming soon.*
 
 # ToDo
 * Self-updating application.
