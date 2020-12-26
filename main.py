@@ -19,16 +19,18 @@ from classes.instabot import InstaBot
 updater = Updater()
 #driversetup = DriverSetup()
 config = Config('./config/config.json')
+enable = updater.isUpdated()
 
-my_bot = None
+if enable:
+    my_bot = None
+    
+    try:
+        # initialize bot
+        my_bot = InstaBot(config)
 
-try:
-    # initialize bot
-    my_bot = InstaBot(config)
+        # start bot
+        my_bot.startBot()
+    except KeyboardInterrupt:
+        Helper.exitApp('Early termination of InstaBot.', [my_bot.counter.count_comments_file], my_bot)
 
-    # start bot
-    my_bot.startBot()
-except KeyboardInterrupt:
-    Helper.exitApp('Early termination of InstaBot.', [my_bot.counter.count_comments_file], my_bot)
-
-Helper.exitApp('InstaBot exited successfully!', [my_bot.counter.count_comments_file], my_bot)
+    Helper.exitApp('InstaBot exited successfully!', [my_bot.counter.count_comments_file], my_bot)
