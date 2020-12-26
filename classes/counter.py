@@ -10,7 +10,7 @@ class Counter:
     def __init__(self):
         # load comment counter
         try:
-            with open('./counter.txt') as countCommentsFile:
+            with open('./counter.txt', 'r') as countCommentsFile:
                 self.comments_counter = int(countCommentsFile.read())
         except Exception as e:
             print(e)

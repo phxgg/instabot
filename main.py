@@ -29,6 +29,6 @@ try:
     # start bot
     my_bot.startBot()
 except KeyboardInterrupt:
-    Helper.exitApp('Early termination of InstaBot.', [my_bot.counter.countCommentsFile], my_bot)
+    Helper.exitApp('Early termination of InstaBot.', [my_bot.counter.count_comments_file], my_bot)
 
-Helper.exitApp('InstaBot exited successfully!', [my_bot.counter.countCommentsFile], my_bot)
+Helper.exitApp('InstaBot exited successfully!', [my_bot.counter.count_comments_file], my_bot)

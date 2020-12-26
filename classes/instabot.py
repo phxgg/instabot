@@ -121,9 +121,12 @@ class InstaBot:
             self.counter.minute_break_comments = self.counter.minute_break_comments + 1
             self.counter.hour_break_comments = self.counter.hour_break_comments + 1
 
-            self.counter.count_comments_file.seek(0)
-            self.counter.count_comments_file.truncate()
-            self.counter.count_comments_file.write(str(self.counter.comments_counter))
+            self.counter.count_comments_file.seek(0) # get to the first index of text
+            self.counter.count_comments_file.truncate() # truncate everything after it
+            self.counter.count_comments_file.write(str(self.counter.comments_counter)) # write new comments counter
+
+            self.counter.count_comments_file.flush() # these two lines will make sure the file is saved & updated even if an error occurs
+            os.fsync(self.counter.count_comments_file.fileno())
 
     def comment(self):
         # clone the global tags variable
