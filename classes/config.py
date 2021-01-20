@@ -1,4 +1,9 @@
-from win32api import GetSystemMetrics
+'''
+cannot import win32api (pywin32) on mac
+instead of setting Width x Height in chromedriver arguments,
+we actually set --start-fullscreen (mac) and --start-maximized (windows)
+'''
+#from win32api import GetSystemMetrics
 import json
 
 class Config:
@@ -25,5 +30,5 @@ class Config:
             print(e)
             sys.exit()
 
-        self.width = str(GetSystemMetrics(0))
-        self.height = str(GetSystemMetrics(1))
+        #self.width = str(GetSystemMetrics(0))
+        #self.height = str(GetSystemMetrics(1))

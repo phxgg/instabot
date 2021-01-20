@@ -31,12 +31,13 @@ class InstaBot:
         
         self.logger.info('Initializing InstaBot...')
         self.logger.debug('Setting up ChromeOptions...')
-        self.logger.debug('Found Monitor Size: ' + self.config.width + 'x' + self.config.height)
+        #self.logger.debug('Found Monitor Size: ' + self.config.width + 'x' + self.config.height)
 
         self.chrome_options = webdriver.ChromeOptions()
-        self.chrome_options.add_argument('--window-size=' + self.config.width + ',' + self.config.height)
+        #self.chrome_options.add_argument('--window-size=' + self.config.width + ',' + self.config.height)
         self.chrome_options.add_argument('--disable-extensions')
-        self.chrome_options.add_argument('--start-maximized')
+        self.chrome_options.add_argument('--start-maximized') # works on Windows
+        self.chrome_options.add_argument('--start-fullscreen') # works on Mac
         self.chrome_options.add_argument('--headless')
         self.chrome_options.add_argument('--user-agent=' + Helper.getUserAgent())
         self.chrome_options.add_argument('--disable-gpu')
