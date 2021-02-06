@@ -96,8 +96,8 @@ class InstaBot:
             Helper.exitApp('Suspicious Login Attempt found', [self.counter.count_comments_file], self)
 
         # bypass One Tap when logged in
-        self.logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')
-        self.driver.find_element_by_xpath('//button[contains(text(), "Not Now")]').click()
+        #self.logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')
+        #self.driver.find_element_by_xpath('//button[contains(text(), "Not Now")]').click()
         sleep(3)
 
     def startBot(self):
