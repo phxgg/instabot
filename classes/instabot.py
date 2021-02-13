@@ -36,9 +36,9 @@ class InstaBot:
         self.chrome_options = webdriver.ChromeOptions()
         #self.chrome_options.add_argument('--window-size=' + self.config.width + ',' + self.config.height)
         self.chrome_options.add_argument('--disable-extensions')
-        self.chrome_options.add_argument('--start-maximized') # works on Windows
-        self.chrome_options.add_argument('--start-fullscreen') # works on Mac
-        self.chrome_options.add_argument('--headless')
+        #self.chrome_options.add_argument('--start-maximized') # works on Windows
+        #self.chrome_options.add_argument('--start-fullscreen') # works on Mac (maybe not necessary)
+        #self.chrome_options.add_argument('--headless')
         self.chrome_options.add_argument('--user-agent=' + Helper.getUserAgent())
         self.chrome_options.add_argument('--disable-gpu')
         self.chrome_options.add_argument('--mute-audio')
@@ -47,11 +47,15 @@ class InstaBot:
         self.chrome_options.add_argument('--ignore-certificate-errors')
         self.chrome_options.add_argument('--allow-running-insecure-content')
         self.chrome_options.add_argument('--log-level=3') # hide console warnings
+        self.chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
+        self.chrome_options.add_experimental_option('useAutomationExtension', False)
 
         self.logger.debug('Loading Chrome driver...')
         self.driver = webdriver.Chrome(Helper.getDriverName(), options=self.chrome_options)
 
-        #self.driver.maximize_window()
+        # make headless mode undetectable
+        self.driver.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": Helper.getUserAgent()})
+        #self.driver.execute_script('Object.defineProperty(navigator, "webdriver", {get: () => undefined})')
 
         # get instagram post
         self.logger.debug('Getting the Instagram post URL...')
@@ -59,27 +63,44 @@ class InstaBot:
         sleep(2)
 
         # click accept cookies
-        self.logger.debug('Clicking "Accept" button on the cookies message...')
-        self.driver.find_element_by_xpath('//button[contains(text(), "Accept")]').click()
+        self.logger.debug('Clicking "Accept" button on the cookies message...')    
+        try:
+            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Accept")]'))).click()
+        except:
+            self.quit()
+            sys.exit('Could not find the "Accept" cookies button.')
+
         sleep(2)
         
         # click the button to get into Login page
         self.logger.debug('Clicking on the "Log In" button...')
-        #self.driver.find_element_by_xpath('//a[contains(text(), "Log In")]').click()
-        self.driver.find_element_by_xpath('//button[contains(text(), "Log In")]').click()
+        try:
+            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Log In")]'))).click()
+        except:
+            self.quit()
+            sys.exit('Could not find the "Log In" button.')
         sleep(3)
 
         # input username & password and click the login button
         self.logger.debug('Looking for the username & password fields')
-        unField = self.driver.find_element_by_xpath('//input[@name="username"]')
-        pwField = self.driver.find_element_by_xpath('//input[@name="password"]')
+
+        try:
+            unField = self.driver.find_element_by_xpath('//input[@name="username"]')
+            pwField = self.driver.find_element_by_xpath('//input[@name="password"]')
+        except:
+            self.quit()
+            sys.exit('Could not find "username" and/or "password" elements.')
 
         self.logger.debug('Sending keys for username & password...')
         self.typePhrase(self.config.username, unField)
         self.typePhrase(self.config.password, pwField)
 
         self.logger.debug('Clicking submit...')
-        self.driver.find_element_by_xpath('//button[@type="submit"]').click()
+        try:
+            self.driver.find_element_by_xpath('//button[@type="submit"]').click()
+        except:
+            self.quit()
+            sys.exit('Could not find "submit" button to login.')
         sleep(5)
 
         # check if the account has been locked. If so, we have to wait for some time to re-try logging in
