@@ -1,0 +1,2 @@
+Windows:
+pyarmor pack --clean main.py && Xcopy "counter.txt" "./dist/main/counter.txt*" && Xcopy /E /I "config-dist" "./dist/main/config"

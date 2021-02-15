@@ -1,0 +1,14 @@
+{
+    "debug": true,
+    "keep_comment_logs": true,
+
+    "username": "your.ig.username",
+    "password": "your.ig.password",
+
+    "ig_post_url": "Link to Instagram post",
+
+    "comment_format": "[tag] [tag] 42 eu",
+
+    "session_comments": 5,
+    "per_hour_comments": 50
+}
