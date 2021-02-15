@@ -32,5 +32,7 @@ if enable:
         my_bot.startBot()
     except KeyboardInterrupt:
         Helper.exitApp('Early termination of InstaBot.', [my_bot.counter.count_comments_file], my_bot)
+    finally:
+        input('Press any key to exit.')
 
     Helper.exitApp('InstaBot exited successfully!', [my_bot.counter.count_comments_file], my_bot)
