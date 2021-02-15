@@ -26,9 +26,8 @@ class Config:
                 for tag in f_tags:
                     self.tags.append(tag.strip()) # use .strip() to remove the new line character
         except Exception as e:
-            print("An error occured while initializing Config.")
             print(e)
-            sys.exit()
+            sys.exit('An error occured while initializing Config.')
 
         #self.width = str(GetSystemMetrics(0))
         #self.height = str(GetSystemMetrics(1))
