@@ -169,8 +169,16 @@ class InstaBot:
         '''
 
         # find instagram post
+        if 'instagram.com' not in self.config.ig_post_url:
+            self.quit()
+            sys.exit('Not an Instagram URL.')
+
         self.logger.debug('Redirecting to Instagram post URL...')
-        self.driver.get(self.config.ig_post_url)
+        try:
+            self.driver.get(self.config.ig_post_url)
+        except:
+            self.quit()
+            sys.exit('URL is invalid.')
         sleep(2)
 
         # get comment textarea and click on the input box. Doing this once, for some reason did not work so i had to do this twice.
