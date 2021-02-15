@@ -1,3 +1,6 @@
+build/
+dist/
+
 __pycache__/
 1not_used/
 .vscode/
