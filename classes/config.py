@@ -4,6 +4,7 @@ instead of setting Width x Height in chromedriver arguments,
 we actually set --start-fullscreen (mac) and --start-maximized (windows)
 '''
 #from win32api import GetSystemMetrics
+import sys
 import json
 
 class Config:
