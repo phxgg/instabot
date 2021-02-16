@@ -25,9 +25,21 @@ so less tags means you're most likely to make a comment you have already made be
 
 *More documentation coming soon.*
 
+# Distribution
+**Windows**
+```
+pyarmor pack --clean main.py && Xcopy "counter.txt" "./dist/main/counter.txt*" && Xcopy /E /I "config-dist" "./dist/main/config"
+```
+
+**macOS**
+```
+pyarmor pack --clean main.py && cp "counter.txt" "./dist/main/counter.txt" && cp -r "config-dist" "./dist/main/config"
+```
+
+ZIP the `dist` folder.
+
 # Bugs
-* It seems like the script won't work (cannot find html elements) on `--headless` mode in Windows 8.
-Should probably try different methods of grabbing elements.
+* It seems like the script won't work (cannot find html elements) on `--headless` mode in Windows 8. (Could not reproduce)
 
 # ToDo
 * Self-updating application.
