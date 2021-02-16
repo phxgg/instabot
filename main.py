@@ -9,6 +9,9 @@ There is a chance that your account might be locked, limited or even banned.
 Use this at your own risk.
 '''
 
+import atexit
+import os
+
 from classes.helper import Helper
 from classes.config import Config
 from classes.updater import Updater
@@ -20,6 +23,12 @@ updater = Updater()
 #driversetup = DriverSetup()
 config = Config('./config/config.json')
 enable = updater.isUpdated()
+
+# Pause app when exiting so it shows the exception error if thrown
+def exit_handler():
+    os.system('pause')
+
+atexit.register(exit_handler)
 
 if enable:
     my_bot = None
@@ -34,4 +43,3 @@ if enable:
         Helper.exitApp('Early termination of InstaBot.', [my_bot.counter.count_comments_file], my_bot)
     finally:
         Helper.exitApp('[EXIT InstaBot]', [my_bot.counter.count_comments_file], my_bot)
-        input('Press any key to exit.')
