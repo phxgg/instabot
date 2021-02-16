@@ -9,6 +9,7 @@ config/tags.txt
 config/tags.old.txt
 classes/driversetup.py
 classes/__pycache__
+counter.txt
 comments.log
 debug.log
 test.py
