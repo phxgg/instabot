@@ -28,12 +28,12 @@ so less tags means you're most likely to make a comment you have already made be
 # Distribution
 **Windows**
 ```
-pyarmor pack --clean main.py && Xcopy "counter.txt" "./dist/main/counter.txt*" && Xcopy /E /I "config-dist" "./dist/main/config"
+pyarmor pack --clean main.py && Xcopy /E /I "config-dist" "./dist/main/config"
 ```
 
 **macOS**
 ```
-pyarmor pack --clean main.py && cp "counter.txt" "./dist/main/counter.txt" && cp -r "config-dist" "./dist/main/config"
+pyarmor pack --clean main.py && cp -r "config-dist" "./dist/main/config"
 ```
 
 ZIP the `dist` folder.
