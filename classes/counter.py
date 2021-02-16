@@ -12,12 +12,9 @@ class Counter:
         try:
             with open('./counter.txt', 'r') as countCommentsFile:
                 self.comments_counter = int(countCommentsFile.read())
-        except FileNotFoundError:
+        except Exception as e:
             with open('./counter.txt', 'a') as countCommentsFile:
                 self.comments_counter = 0
-        except Exception as e:
-            print(e)
-            sys.exit('An error occured when trying to open counter.txt')    
 
         # open counter file to keep updating the counter
         self.count_comments_file = open('./counter.txt', 'a')
