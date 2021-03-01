@@ -39,7 +39,8 @@ pyarmor pack --clean main.py && cp -r "config-dist" "./dist/main/config"
 ZIP the `dist` folder.
 
 # Bugs
-* It seems like the script won't work (cannot find html elements) on `--headless` mode in Windows 8. (Could not reproduce)
+* Windows 8: It seems like the script won't work (cannot find html elements) on `--headless` mode in Windows 8.
+This could be because of Instagram auto sending the current region language. *Might* have been fixed already, not tested.
 
 # ToDo
 * Self-updating application.
