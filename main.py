@@ -26,7 +26,8 @@ enable = updater.isUpdated()
 
 # Pause app when exiting so it shows the exception error if thrown
 def exit_handler():
-    os.system('pause')
+    if Helper.getPlatform() == 'win32':
+        os.system('pause')
 
 atexit.register(exit_handler)
 
