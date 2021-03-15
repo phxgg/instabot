@@ -72,7 +72,7 @@ class InstaBot:
         sleep(2)
 
         # click accept cookies
-        self.logger.debug('Clicking "Accept" button on the cookies message...')    
+        self.logger.debug('Clicking "Accept" button on the cookies message...')
         try:
             ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Accept")]'))).click()
         except:
