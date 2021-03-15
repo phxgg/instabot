@@ -22,7 +22,7 @@ class InstaBot:
 
     def __init__(self, config):
         '''
-        By default, InstaBot initialization will try to log into your account.
+        The constructor will initialize all the variables and start the driver.
         '''
         
         self.config = config
@@ -96,7 +96,6 @@ class InstaBot:
 
         # input username & password and click the login button
         self.logger.debug('Looking for the username & password fields')
-
         try:
             unField = self.driver.find_element_by_xpath('//input[@name="username"]')
             pwField = self.driver.find_element_by_xpath('//input[@name="password"]')
@@ -172,13 +171,6 @@ class InstaBot:
         tag_count = self.config.comment_format.count('[tag]')
         format_tag = self.config.comment_format.replace('[tag]', '{}')
         comment = format_tag.format(*('@' + self.getRandomTag(tags) for _ in range(tag_count))) #tags[random.randint(0, len(tags)-1)]
-
-        '''
-        for i in range(0, 3):
-            index = random.randint(0, len(tags)-1)
-            comment = comment + '@' + tags[index] + ' '
-            tags.remove(tags[index])
-        '''
 
         # find instagram post
         self.checkIfInstagram()
