@@ -38,8 +38,9 @@ if enable:
         # initialize bot
         my_bot = InstaBot(config)
 
-        # start bot
-        my_bot.startBot()
+        # prepare & start bot
+        my_bot.prepare()
+        my_bot.start()
     except KeyboardInterrupt as e:
         print('[KeyboardInterrupt] Early termination of InstaBot.')
     except Exception as e:

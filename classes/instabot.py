@@ -58,9 +58,17 @@ class InstaBot:
         self.driver.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": Helper.getUserAgent()})
         #self.driver.execute_script('Object.defineProperty(navigator, "webdriver", {get: () => undefined})')
 
+    def prepare(self):
+        # check if url is an instagram link
+        self.checkIfInstagram()
+        
         # get instagram post
         self.logger.debug('Getting the Instagram post URL...')
-        self.driver.get(self.config.ig_post_url)
+        try:
+            self.driver.get(self.config.ig_post_url)
+        except:
+            raise Exception('Could not open the link.')
+
         sleep(2)
 
         # click accept cookies
@@ -68,18 +76,22 @@ class InstaBot:
         try:
             ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Accept")]'))).click()
         except:
-            self.quit()
-            sys.exit('Could not find the "Accept" cookies button.')
+            raise Exception('Could not find the "Accept" cookies button.')
 
         sleep(2)
         
+        # check if the Post URL is valid
+        self.logger.debug('Validating post URL...')
+        if not self.validPostURL():
+            raise Exception('Post URL is invalid. Please check the URL you provided in the config.')
+
         # click the button to get into Login page
         self.logger.debug('Clicking on the "Log In" button...')
         try:
             ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Log In")]'))).click()
         except:
-            self.quit()
-            sys.exit('Could not find the "Log In" button.')
+            raise Exception('Could not find the "Log In" button.')
+
         sleep(3)
 
         # input username & password and click the login button
@@ -89,8 +101,7 @@ class InstaBot:
             unField = self.driver.find_element_by_xpath('//input[@name="username"]')
             pwField = self.driver.find_element_by_xpath('//input[@name="password"]')
         except:
-            self.quit()
-            sys.exit('Could not find "username" and/or "password" elements.')
+            raise Exception('Could not find "username" and/or "password" elements.')
 
         self.logger.debug('Sending keys for username & password...')
         self.typePhrase(self.config.username, unField)
@@ -100,8 +111,8 @@ class InstaBot:
         try:
             self.driver.find_element_by_xpath('//button[@type="submit"]').click()
         except:
-            self.quit()
-            sys.exit('Could not find "submit" button to login.')
+            raise Exception('Could not find "submit" button to login.')
+            
         sleep(5)
 
         # check if the account has been locked. If so, we have to wait for some time to re-try logging in
@@ -114,15 +125,16 @@ class InstaBot:
 
         # check for Suspicious Login Attempt
         if self.suspiciousLoginAttempt():
-            self.logger.error('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
-            Helper.exitApp('Suspicious Login Attempt found', [self.counter.count_comments_file], self)
+            raise Exception('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
+            #self.logger.error('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
+            #Helper.exitApp('Suspicious Login Attempt found', [self.counter.count_comments_file], self)
 
         # bypass One Tap when logged in
         #self.logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')
         #self.driver.find_element_by_xpath('//button[contains(text(), "Not Now")]').click()
         sleep(3)
 
-    def startBot(self):
+    def start(self):
         while True:
             # hour break
             if self.counter.hour_break_comments >= self.config.per_hour_comments:
@@ -169,25 +181,26 @@ class InstaBot:
         '''
 
         # find instagram post
-        if 'instagram.com' not in self.config.ig_post_url:
-            self.quit()
-            sys.exit('Not an Instagram URL.')
+        self.checkIfInstagram()
 
         self.logger.debug('Redirecting to Instagram post URL...')
         try:
             self.driver.get(self.config.ig_post_url)
         except:
-            self.quit()
-            sys.exit('URL is invalid.')
+            raise Exception('Could not open the link.')
+
         sleep(2)
 
         # get comment textarea and click on the input box. Doing this once, for some reason did not work so i had to do this twice.
         self.logger.debug('Looking for the comment textarea & clicking on it...')
-        commentArea = self.driver.find_element_by_xpath('//textarea[contains(@aria-label,"Add a comment")]')
-        commentArea.click()
-        sleep(5)
-        commentArea = self.driver.find_element_by_xpath('//textarea[contains(@aria-label,"Add a comment")]')
-        commentArea.click()
+        try:
+            commentArea = self.driver.find_element_by_xpath('//textarea[contains(@aria-label,"Add a comment")]')
+            commentArea.click()
+            sleep(5)
+            commentArea = self.driver.find_element_by_xpath('//textarea[contains(@aria-label,"Add a comment")]')
+            commentArea.click()
+        except:
+            raise Exception('Could not find the comment textarea.')
 
         # input comment
         self.logger.info('Commenting: ' + comment)
@@ -196,7 +209,11 @@ class InstaBot:
 
         # click post button (or we could send_keys(Keys.RETURN))
         self.logger.debug('Clicking the "Post" button...')
-        self.driver.find_element_by_xpath('//button[contains(text(), "Post")]').click()
+        try:
+            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Post")]'))).click()
+        except:
+            raise Exception('Could not find the "Post" button.')
+
         sleep(1.5)
 
         # check if post was successfully commented. Otherwise wait for 1 hour to kinda refresh the rate
@@ -211,13 +228,29 @@ class InstaBot:
         #self.driver.execute_script("document.evaluate(\"//button[contains(text(), 'Post')]\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.removeAttribute(\"disabled\");")
         #sleep(2)
     
+    def checkIfInstagram(self):
+        '''
+        Check if the given URL is an Instagram link.
+        '''
+
+        if 'instagram.com' not in self.config.ig_post_url:
+            raise Exception('Not an Instagram URL.')
+
     def getRandomTag(self, tags):
+        '''
+        Return a random username from the tags.txt
+        '''
+
         index = random.randint(0, len(tags)-1)
         tag = tags[index]
         tags.remove(tag) # delete tag from the temporary variable. We do not want to show the same tag more than once
         return tag
 
     def suspiciousLoginAttempt(self):
+        '''
+        Return true if a "suspicious login attempt" message has been received.
+        '''
+
         flag = False
 
         # find "Suspicious Login Attempt" text
@@ -236,13 +269,32 @@ class InstaBot:
         return flag
 
     def canLogin(self):
+        '''
+        Return true if no error has been received during the login attempt.
+        '''
+
         try:
             self.driver.find_element_by_xpath('//p[@id="slfErrorAlert"]')
         except NoSuchElementException:
             return True
         return False
 
+    def validPostURL(self):
+        '''
+        Return true if the Post URL exists.
+        '''
+
+        try:
+            self.driver.find_element_by_xpath('//h2[contains(text(), "Sorry, this page isn\'t available.")]')
+        except NoSuchElementException:
+            return True
+        return False
+
     def commentPosted(self):
+        '''
+        Return true if the comment was successfully posted and no errors were received.
+        '''
+
         flag = False
 
         # check if Retry button exists
@@ -271,9 +323,17 @@ class InstaBot:
         return True
 
     def typePhrase(self, comment, field):
+        '''
+        Type something in a field with random time between each letter (0.03 - 0.08 seconds)
+        '''
+
         for letter in comment:
             field.send_keys(letter)
             sleep(random.uniform(0.03, 0.08)) # input time of each letter (const one was: 0.048)
 
     def quit(self):
+        '''
+        Quit the driver.
+        '''
+
         self.driver.quit()
