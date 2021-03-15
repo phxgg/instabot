@@ -12,7 +12,7 @@ class Counter:
         try:
             with open('./counter.txt', 'r') as countCommentsFile:
                 self.comments_counter = int(countCommentsFile.read())
-        except Exception as e:
+        except Exception:
             with open('./counter.txt', 'a') as countCommentsFile:
                 self.comments_counter = 0
 
