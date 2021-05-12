@@ -38,7 +38,7 @@ class InstaBot:
         self.chrome_options.add_argument('--disable-extensions')
         self.chrome_options.add_argument('--start-maximized') # works on Windows
         #self.chrome_options.add_argument('--start-fullscreen') # works on Mac (maybe not necessary)
-        self.chrome_options.add_argument('--headless')
+        #self.chrome_options.add_argument('--headless')
         self.chrome_options.add_argument('--lang=en-US')
         self.chrome_options.add_argument('--user-agent=' + Helper.getUserAgent())
         self.chrome_options.add_argument('--disable-gpu')
@@ -128,9 +128,17 @@ class InstaBot:
             #self.logger.error('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
             #Helper.exitApp('Suspicious Login Attempt found', [self.counter.count_comments_file], self)
 
+        # redirect to instagram post url in case "One Tap" box shows up
+        self.logger.debug('Redirecting to Instagram post URL...')
+        try:
+            self.driver.get(self.config.ig_post_url)
+        except:
+            raise Exception('Could not open the link.')
+
         # bypass One Tap when logged in
         #self.logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')
         #self.driver.find_element_by_xpath('//button[contains(text(), "Not Now")]').click()
+        
         sleep(3)
 
     def start(self):
