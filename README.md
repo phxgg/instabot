@@ -34,6 +34,12 @@ so less tags means you're most likely to make a comment you have already made be
 *More documentation coming soon.*
 
 # Distribution
+### PyInstaller for Windows
+```
+pyinstaller main.py && Xcopy /E /I "config-dist" "./dist/main/config" && rm main.spec
+```
+
+### PyArmor
 **Windows**
 ```
 pyarmor pack --clean main.py && Xcopy /E /I "config-dist" "./dist/main/config"
