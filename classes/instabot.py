@@ -196,13 +196,20 @@ class InstaBot:
         # get comment textarea and click on the input box. Doing this once, for some reason did not work so i had to do this twice.
         self.logger.debug('Looking for the comment textarea & clicking on it...')
         try:
-            commentArea = self.driver.find_element_by_xpath('//textarea[contains(@aria-label,"Add a comment…")]')
+
+            # It seems like Instagram breaks the script randomly when trying to find the comment textarea.
+            # To fix this, instead of raising an exception when the comment textarea is not found,
+            # we're calling the comment() method again.
+
+            commentArea = self.driver.find_element_by_xpath('//textarea[contains(@aria-label,"Add a comment")]')
             commentArea.click()
             sleep(5)
-            commentArea = self.driver.find_element_by_xpath('//textarea[contains(@aria-label,"Add a comment…")]')
+            commentArea = self.driver.find_element_by_xpath('//textarea[contains(@aria-label,"Add a comment")]')
             commentArea.click()
         except:
-            raise Exception('Could not find the comment textarea.')
+            #raise Exception('Could not find the comment textarea.')
+            print('Could not find the comment textarea. ')
+            self.comment()
 
         # input comment
         self.logger.info('Commenting: ' + comment)
