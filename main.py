@@ -15,12 +15,12 @@ import os
 from classes.helper import Helper
 from classes.config import Config
 from classes.updater import Updater
-#from classes.driversetup import DriverSetup
+from classes.driversetup import DriverSetup
 from classes.instabot import InstaBot
 
 # Global variables
 updater = Updater()
-#driversetup = DriverSetup()
+driversetup = DriverSetup()
 config = Config('./config/config.json')
 enable = updater.isUpdated()
 

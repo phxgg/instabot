@@ -10,7 +10,7 @@ Works great on multi-participation allowed giveaways.
 1. Install Python 3.8 (or later) & pip from https://www.python.org/
 2. Use `pip install -r requirements.txt` to install the requirements.
 3. Download the latest stable release of ChromeDriver from https://chromedriver.chromium.org/<br>*[you will have to have Google Chrome installed and updated to latest version]*
-4. Include ChromeDriver executable path to your `PATH` system environment variable.
+4. Include ChromeDriver executable path to your `PATH` system environment variable.<br>*[newer versions of InstaBot will auto download ChromeDriver, and `PATH` won't be necessary to edit]*
 
 # How to use
 1. Rename `config-sample.json` to `config.json` and `tags-sample.txt` to `tags.txt` inside the `config` folder.

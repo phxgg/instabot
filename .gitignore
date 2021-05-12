@@ -1,5 +1,6 @@
 build/
 dist/
+bin/
 
 __pycache__/
 1not_used/
@@ -7,7 +8,6 @@ __pycache__/
 config/config.json
 config/tags.txt
 config/tags.old.txt
-classes/driversetup.py
 classes/__pycache__
 counter.txt
 comments.log

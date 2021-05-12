@@ -1,3 +1,4 @@
+import os
 import sys
 import hashlib
 
@@ -35,6 +36,10 @@ class Helper:
             driver_file_name = 'chromedriver'
 
         return driver_file_name
+
+    @staticmethod
+    def getDriverPath():
+        return os.path.join(os.getcwd(), 'bin', Helper.getDriverName())
         
     @staticmethod
     def getUserAgent():

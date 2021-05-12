@@ -7,10 +7,8 @@ from selenium.common.exceptions import NoSuchElementException
 from time import sleep
 import random
 import os
-import sys
 
 from .helper import Helper
-from .config import Config
 from .counter import Counter
 from .logger import Logger
 
@@ -54,7 +52,7 @@ class InstaBot:
         self.chrome_options.add_experimental_option('useAutomationExtension', False)
 
         self.logger.debug('Loading Chrome driver...')
-        self.driver = webdriver.Chrome(Helper.getDriverName(), options=self.chrome_options)
+        self.driver = webdriver.Chrome(Helper.getDriverPath(), options=self.chrome_options)
 
         # make headless mode undetectable
         self.driver.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": Helper.getUserAgent()})
