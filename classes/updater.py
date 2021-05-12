@@ -1,4 +1,3 @@
-import os
 import requests
 
 VERSION = '1.0'
