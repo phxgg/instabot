@@ -38,7 +38,7 @@ class InstaBot:
         self.chrome_options.add_argument('--disable-extensions')
         self.chrome_options.add_argument('--start-maximized') # works on Windows
         #self.chrome_options.add_argument('--start-fullscreen') # works on Mac (maybe not necessary)
-        #self.chrome_options.add_argument('--headless')
+        self.chrome_options.add_argument('--headless')
         self.chrome_options.add_argument('--lang=en-US')
         self.chrome_options.add_argument('--user-agent=' + Helper.getUserAgent())
         self.chrome_options.add_argument('--disable-gpu')
@@ -138,7 +138,7 @@ class InstaBot:
         # bypass One Tap when logged in
         #self.logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')
         #self.driver.find_element_by_xpath('//button[contains(text(), "Not Now")]').click()
-        
+
         sleep(3)
 
     def start(self):
