@@ -208,7 +208,7 @@ class InstaBot:
             commentArea.click()
         except:
             #raise Exception('Could not find the comment textarea.')
-            print('Could not find the comment textarea. ')
+            print('Could not find the comment textarea. Trying again.')
             self.comment()
 
         # input comment
