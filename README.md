@@ -55,9 +55,8 @@ This could be because of Instagram auto sending the current region language. *Mi
 * Support for Firefox browser.
 * Option to get tags from followings/followers instead of using `tags.txt`.
 * Enable maximum number of comments per day to prevent Instagram from limiting.
-* Auto download ChromeDriver binaries if it does not exist.<br>
-<i>(This might not work, because ChromeDriver gave an error that it needs to be in PATH. This means the user has to do that manually.)</i>
-* Cross-platform availability <i>(after the above is done)</i>
+* <s>Auto download ChromeDriver binaries if it does not exist.</s>
+* <s>Cross-platform availability.</s>
 * <s>Create a `start()` method in the `InstaBot` class and do the work there.</s>
 * <s>Create a `Helper` class and keep certain functions there.</s>
 * <s>User-Agent selection depending on the platform.</s>
