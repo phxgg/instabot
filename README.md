@@ -14,8 +14,16 @@ Works great on multi-participation allowed giveaways.
 
 # How to use
 1. Rename `config-sample.json` to `config.json` and `tags-sample.txt` to `tags.txt` inside the `config` folder.
-2. In `config.json` fill in your username and password in the corresponding fields. Also fill in the Instagram post URL.<br>
-3. In your `tags.txt` file, each line should be an Instagram username for your tag list.
+2. In your `tags.txt` file, each line should be an Instagram username for your tag list.
+3. In `config.json` complete the following fields:<br>
+    * `username` Your instagram username.
+    * `password` Your instagram password.
+    * `ig_post_url` The instagram link of the post.
+    * `comment_format` What you want to comment. Each `[tag]` field will be a different tag from your tags list.
+    * `session_comments` How many comments to make before a 3 minute break happens (<b>recommended:</b> `3`)
+    * `per_hour_comments` Maximum number of comments before a 1 hour break happens. (<b>recommended:</b> `35`)
+    * `debug` Show debug logs in the console (true/false) (<b>recommended:</b> `true`).
+    * `keep_comment_logs` Create a `comments.log` file that keeps logs of all your comments (<b>recommended:</b> `true`). 
 
 <u><b>Notes:</b></u>
 * You need to have 2FA disabled on your Instagram account.
