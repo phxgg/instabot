@@ -18,8 +18,6 @@ class InstaBot:
     counter = None
     driver = None
 
-    refresh_counter = 0
-
     def __init__(self, config):
         '''
         The constructor will initialize all the variables and start the driver.
@@ -183,13 +181,10 @@ class InstaBot:
         # find instagram post
         self.checkIfInstagram()
 
-        if self.refresh_counter == 3:
-            self.refresh_counter = 0
-            self.logger.debug('REFRESH: Redirecting to Instagram post URL...')
-            try:
-                self.driver.get(self.config.ig_post_url)
-            except:
-                raise Exception('Could not open the link.')
+        try:
+            self.driver.get(self.config.ig_post_url)
+        except:
+            raise Exception('Could not open the link.')
 
             sleep(2)
 
@@ -207,9 +202,9 @@ class InstaBot:
             commentArea = self.driver.find_element_by_xpath('//textarea[contains(@aria-label,"Add a comment")]')
             commentArea.click()
         except:
-            #raise Exception('Could not find the comment textarea.')
-            print('Could not find the comment textarea. Trying again.')
-            self.comment()
+            raise Exception('Could not find the comment textarea.')
+            #print('Could not find the comment textarea. Trying again.')
+            #self.comment()
 
         # input comment
         self.logger.info('Commenting: ' + comment)
@@ -233,9 +228,6 @@ class InstaBot:
             self.logger.writeComment(comment)
             self.logger.debug('Posted successfully!')
             self.counter.comments_counter = self.counter.comments_counter + 1
-        
-        # each time comment is called, increment refresh_counter by 1
-        self.refresh_counter = self.refresh_counter + 1
 
         #self.driver.execute_script("document.evaluate(\"//button[contains(text(), 'Post')]\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.removeAttribute(\"disabled\");")
         #sleep(2)
