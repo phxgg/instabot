@@ -20,6 +20,8 @@ class InstaBot:
     counter = None
     driver = None
 
+    refresh_counter = 0
+
     def __init__(self, config):
         '''
         The constructor will initialize all the variables and start the driver.
@@ -175,13 +177,15 @@ class InstaBot:
         # find instagram post
         self.checkIfInstagram()
 
-        self.logger.debug('Redirecting to Instagram post URL...')
-        try:
-            self.driver.get(self.config.ig_post_url)
-        except:
-            raise Exception('Could not open the link.')
+        if self.refresh_counter == 3:
+            self.refresh_counter = 0
+            self.logger.debug('REFRESH: Redirecting to Instagram post URL...')
+            try:
+                self.driver.get(self.config.ig_post_url)
+            except:
+                raise Exception('Could not open the link.')
 
-        sleep(2)
+            sleep(2)
 
         # get comment textarea and click on the input box. Doing this once, for some reason did not work so i had to do this twice.
         self.logger.debug('Looking for the comment textarea & clicking on it...')
@@ -217,6 +221,9 @@ class InstaBot:
             self.logger.debug('Posted successfully!')
             self.counter.comments_counter = self.counter.comments_counter + 1
         
+        # each time comment is called, increment refresh_counter by 1
+        self.refresh_counter = self.refresh_counter + 1
+
         #self.driver.execute_script("document.evaluate(\"//button[contains(text(), 'Post')]\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.removeAttribute(\"disabled\");")
         #sleep(2)
     
