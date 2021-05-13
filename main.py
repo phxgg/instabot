@@ -11,12 +11,15 @@ Use this at your own risk.
 
 import atexit
 import os
+import sys
 
 from classes.helper import Helper
 from classes.config import Config
 from classes.updater import Updater
 from classes.driversetup import DriverSetup
 from classes.instabot import InstaBot
+
+#sys.stdout = open('Logs.log', 'w')
 
 # Global variables
 updater = Updater()
@@ -26,6 +29,8 @@ enable = updater.isUpdated()
 
 # Pause app when exiting so it shows the exception error if thrown
 def exit_handler():
+    #sys.stdout.close()
+
     if Helper.getPlatform() == 'win32':
         os.system('pause')
 

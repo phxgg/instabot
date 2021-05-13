@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support import ui
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 
 from time import sleep
 import random
@@ -186,29 +186,25 @@ class InstaBot:
         except:
             raise Exception('Could not open the link.')
 
-            sleep(2)
+        sleep(2)
 
-        # get comment textarea and click on the input box. Doing this once, for some reason did not work so i had to do this twice.
+        # get comment textarea and click on the input box.
+        # Instagram might load the commentArea more than one times, so we might get an exception at the first try.
         self.logger.debug('Looking for the comment textarea & clicking on it...')
         try:
-
-            # It seems like Instagram breaks the script randomly when trying to find the comment textarea.
-            # To fix this, instead of raising an exception when the comment textarea is not found,
-            # we're calling the comment() method again.
-
-            commentArea = self.driver.find_element_by_xpath('//textarea[contains(@aria-label,"Add a comment")]')
+            commentArea = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment")]')))
             commentArea.click()
-            sleep(5)
-            commentArea = self.driver.find_element_by_xpath('//textarea[contains(@aria-label,"Add a comment")]')
+        except StaleElementReferenceException as e:
+            commentArea = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment")]')))
             commentArea.click()
         except:
             raise Exception('Could not find the comment textarea.')
-            #print('Could not find the comment textarea. Trying again.')
-            #self.comment()
+
+        sleep(1)
 
         # input comment
         self.logger.info('Commenting: ' + comment)
-        self.typePhrase(comment, commentArea)
+        self.typePhrase(comment, commentArea, True)
         sleep(1)
 
         # click post button (or we could send_keys(Keys.RETURN))
@@ -326,14 +322,24 @@ class InstaBot:
             return False
         return True
 
-    def typePhrase(self, comment, field):
+    def typePhrase(self, comment, field, isCommentArea = False):
         '''
         Type something in a field with random time between each letter (0.03 - 0.08 seconds)
         '''
 
-        for letter in comment:
-            field.send_keys(letter)
-            sleep(random.uniform(0.03, 0.08)) # input time of each letter (const one was: 0.048)
+        try:
+            for letter in comment:
+                # It seems like Instagram will load the commentArea textbox more than one times.
+                # To fix this, we're grabbing the element at the exact time that we want to type on it.
+                if isCommentArea:
+                    field = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment")]')))
+
+                field.send_keys(letter)
+                sleep(random.uniform(0.03, 0.08)) # input time of each letter (const one was: 0.048)
+        except StaleElementReferenceException as e:
+            raise StaleElementReferenceException('bug')
+        except:
+            raise Exception('[InstaBot] typePhrase(): Something went wrong.')
 
     def quit(self):
         '''
