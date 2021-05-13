@@ -14,7 +14,7 @@ Works great on multi-participation allowed giveaways.
 
 # How to use
 1. Rename `config-sample.json` to `config.json` and `tags-sample.txt` to `tags.txt` inside the `config` folder.
-2. In your `tags.txt` file, each line should be an Instagram username for your tag list.
+2. In your `tags.txt` file, each line should be an Instagram username for your tag list. <b>Make sure to NOT have any empty lines.</b>
 3. In `config.json` complete the following fields:<br>
     * `username` Your instagram username.
     * `password` Your instagram password.
@@ -34,18 +34,24 @@ so less tags means you're most likely to make a comment you have already made be
 *More documentation coming soon.*
 
 # Distribution
-### PyInstaller for Windows
+## PyInstaller
+* Windows
 ```
 pyinstaller main.py && Xcopy /E /I "config-dist" "./dist/main/config" && del main.spec
 ```
 
-### PyArmor
-**Windows**
+* macOS
+```
+pyinstaller main.py && cp -r "config-dist" "./dist/main/config" && rm -rf main.spec
+```
+
+## PyArmor
+* Windows
 ```
 pyarmor pack --clean main.py && Xcopy /E /I "config-dist" "./dist/main/config"
 ```
 
-**macOS**
+* macOS
 ```
 pyarmor pack --clean main.py && cp -r "config-dist" "./dist/main/config"
 ```
