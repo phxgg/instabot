@@ -205,6 +205,7 @@ class InstaBot:
         # input comment
         self.logger.info('Commenting: ' + comment)
         self.typePhrase(comment, commentArea, True)
+        
         sleep(1)
 
         # click post button (or we could send_keys(Keys.RETURN))
