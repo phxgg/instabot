@@ -66,7 +66,6 @@ This could be because of Instagram auto sending the current region language. *Mi
 * Self-updating application.
 * Support for Firefox browser.
 * Option to get tags from followings/followers instead of using `tags.txt`.
-* Enable maximum number of comments per day to prevent Instagram from limiting.
 * <s>Auto download ChromeDriver binaries if it does not exist.</s>
 * <s>Cross-platform availability.</s>
 * <s>Create a `start()` method in the `InstaBot` class and do the work there.</s>
