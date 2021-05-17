@@ -1,7 +1,5 @@
 # InstaBot
 
-### *This is under construction*
-
 Auto commenting bot for Instagram.
 
 Works great on multi-participation allowed giveaways.
