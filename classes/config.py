@@ -19,10 +19,9 @@ class Config:
 
             with open('./config/tags.txt') as f_tags:
                 for tag in f_tags:
-                    self.tags.append(tag.strip()) # use .strip() to remove the new line character
+                    tag = tag.strip() # use .strip() to remove the new line character
+                    if not tag.isspace():
+                        self.tags.append(tag)
         except Exception as e:
             print(e)
             sys.exit('An error occured while initializing Config.')
-
-        #self.width = str(GetSystemMetrics(0))
-        #self.height = str(GetSystemMetrics(1))
