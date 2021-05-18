@@ -35,12 +35,12 @@ so less tags means you're most likely to make a comment you have already made be
 ## PyInstaller
 * Windows
 ```
-pyinstaller main.py && Xcopy /E /I "config-dist" "./dist/main/config" && del main.spec
+pyinstaller --clean main.py && Xcopy /E /I "config-dist" "./dist/main/config" && del main.spec
 ```
 
 * macOS
 ```
-pyinstaller main.py && cp -r "config-dist" "./dist/main/config" && rm -rf main.spec
+pyinstaller --clean main.py && cp -r "config-dist" "./dist/main/config" && rm -rf main.spec
 ```
 
 ## PyArmor
