@@ -61,6 +61,7 @@ ZIP the `dist` folder.
 This could be because of Instagram auto sending the current region language. *Might* have been fixed already, not tested.
 
 # ToDo
+* Set browser locale to English (`en_US`) with ChromeDriver.
 * Self-updating application.
 * Support for Firefox browser.
 * Option to get tags from followings/followers instead of using `tags.txt`.

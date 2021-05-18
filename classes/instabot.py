@@ -46,6 +46,7 @@ class InstaBot:
         self.chrome_options.add_argument('--ignore-certificate-errors')
         self.chrome_options.add_argument('--allow-running-insecure-content')
         self.chrome_options.add_argument('--log-level=3') # hide console warnings
+        self.chrome_options.add_experimental_option('prefs', {'intl.accept_languages': 'en,en_US'})
         self.chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
         self.chrome_options.add_experimental_option('useAutomationExtension', False)
 
