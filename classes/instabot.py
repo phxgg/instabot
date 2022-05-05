@@ -91,7 +91,7 @@ class InstaBot:
         # except:
         #     raise Exception('Could not find the "Log In" button.')
 
-        # redirect to instagram post url in case "One Tap" box shows up
+        # redirect to instagram login url
         self.logger.debug('Redirecting to Login page...')
         try:
             self.driver.get('https://www.instagram.com/accounts/login/')
