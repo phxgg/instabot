@@ -73,7 +73,7 @@ class InstaBot:
         # click accept cookies
         self.logger.debug('Clicking "Accept" button on the cookies message...')
         try:
-            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Accept")]'))).click()
+            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Allow essential and optional cookies")]'))).click()
         except:
             raise Exception('Could not find the "Accept" cookies button.')
 
@@ -85,11 +85,18 @@ class InstaBot:
             raise Exception('Post URL is invalid. Please check the URL you provided in the config.')
 
         # click the button to get into Login page
-        self.logger.debug('Clicking on the "Log In" button...')
+        # self.logger.debug('Clicking on the "Log In" button...')
+        # try:
+        #     ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Log In")]'))).click()
+        # except:
+        #     raise Exception('Could not find the "Log In" button.')
+
+        # redirect to instagram post url in case "One Tap" box shows up
+        self.logger.debug('Redirecting to Login page...')
         try:
-            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Log In")]'))).click()
+            self.driver.get('https://www.instagram.com/accounts/login/')
         except:
-            raise Exception('Could not find the "Log In" button.')
+            raise Exception('Could not redirect to the Login page.')
 
         sleep(3)
 
@@ -212,7 +219,8 @@ class InstaBot:
         # click post button (or we could send_keys(Keys.RETURN))
         self.logger.debug('Clicking the "Post" button...')
         try:
-            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Post")]'))).click()
+            # ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Post")]'))).click()
+            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(@data-testid, "post-comment-input-button")]'))).click()
         except:
             raise Exception('Could not find the "Post" button.')
 
