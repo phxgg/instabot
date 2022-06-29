@@ -219,8 +219,8 @@ class InstaBot:
         # click post button (or we could send_keys(Keys.RETURN))
         self.logger.debug('Clicking the "Post" button...')
         try:
-            # ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Post")]'))).click()
-            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(@data-testid, "post-comment-input-button")]'))).click()
+            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/div[contains(text(), "Post")]'))).click()
+            # ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(@data-testid, "post-comment-input-button")]'))).click()
         except:
             raise Exception('Could not find the "Post" button.')
 
