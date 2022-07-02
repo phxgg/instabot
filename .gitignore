@@ -13,3 +13,4 @@ counter.txt
 comments.log
 debug.log
 test.py
+.DS_Store
