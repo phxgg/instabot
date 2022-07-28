@@ -35,17 +35,21 @@ class InstaBot:
         #self.chrome_options.add_argument('--window-size=' + self.config.width + ',' + self.config.height)
         self.chrome_options.add_argument('--disable-extensions')
         self.chrome_options.add_argument('--start-maximized') # works on Windows
-        #self.chrome_options.add_argument('--start-fullscreen') # works on Mac (maybe not necessary)
-        self.chrome_options.add_argument('--headless')
+        # self.chrome_options.add_argument('--start-fullscreen') # works on Mac (maybe not necessary)
+        # self.chrome_options.add_argument('--headless')
         self.chrome_options.add_argument('--lang=en-US')
-        self.chrome_options.add_argument('--user-agent=' + Helper.getUserAgent())
         self.chrome_options.add_argument('--disable-gpu')
         self.chrome_options.add_argument('--mute-audio')
+        self.chrome_options.add_argument('--log-level=3') # hide console warnings
+
+        # detection issues
+        self.chrome_options.add_argument('--user-agent=' + Helper.getUserAgent())
+        self.chrome_options.add_argument('--disable-blink-features=AutomationControlled')
         self.chrome_options.add_argument('--disable-dev-shm-usage')
         self.chrome_options.add_argument('--no-sandbox')
         self.chrome_options.add_argument('--ignore-certificate-errors')
         self.chrome_options.add_argument('--allow-running-insecure-content')
-        self.chrome_options.add_argument('--log-level=3') # hide console warnings
+
         self.chrome_options.add_experimental_option('prefs', {'intl.accept_languages': 'en,en_US'})
         self.chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
         self.chrome_options.add_experimental_option('useAutomationExtension', False)
@@ -53,9 +57,11 @@ class InstaBot:
         self.logger.debug('Loading Chrome driver...')
         self.driver = webdriver.Chrome(Helper.getDriverPath(), options=self.chrome_options)
 
-        # make headless mode undetectable
-        self.driver.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": Helper.getUserAgent()})
-        #self.driver.execute_script('Object.defineProperty(navigator, "webdriver", {get: () => undefined})')
+        # self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+        self.driver.execute_cdp_cmd('Network.setUserAgentOverride', {'userAgent': Helper.getUserAgent()})
+
+        self.logger.debug('navigator.userAgent: ' + self.driver.execute_script('return navigator.userAgent'))
+        self.logger.debug('navigator.webdriver: ' + str(self.driver.execute_script('return navigator.webdriver')))
 
     def prepare(self):
         # check if url is an instagram link
@@ -64,7 +70,8 @@ class InstaBot:
         # get instagram post
         self.logger.debug('Getting the Instagram post URL...')
         try:
-            self.driver.get(self.config.ig_post_url)
+            self.driver.get('https://instagram.com')
+            # self.driver.get(self.config.ig_post_url)
         except:
             raise Exception('Could not open the link.')
 
