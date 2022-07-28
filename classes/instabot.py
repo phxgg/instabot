@@ -3,6 +3,7 @@ from selenium.webdriver.support import ui
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
+from selenium.webdriver.common.keys import Keys
 
 from time import sleep
 import random
@@ -219,17 +220,17 @@ class InstaBot:
 
         # input comment
         self.logger.info('Commenting: ' + comment)
-        self.typePhrase(comment, commentArea, True)
+        self.typePhrase(comment, commentArea, True, True)
         
         sleep(1)
-
+        
         # click post button (or we could send_keys(Keys.RETURN))
-        self.logger.debug('Clicking the "Post" button...')
-        try:
-            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/div[contains(text(), "Post")]'))).click()
-            # ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(@data-testid, "post-comment-input-button")]'))).click()
-        except:
-            raise Exception('Could not find the "Post" button.')
+        # self.logger.debug('Clicking the "Post" button...')
+        # try:
+        #     ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/div[contains(text(), "Post")]'))).click()
+        #     # ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(@data-testid, "post-comment-input-button")]'))).click()
+        # except:
+        #     raise Exception('Could not find the "Post" button.')
 
         sleep(1.5)
 
@@ -339,13 +340,17 @@ class InstaBot:
             return False
         return True
 
-    def typePhrase(self, comment, field, isCommentArea = False):
+    def typePhrase(self, text, field, isCommentArea = False, pressEnter = False):
         '''
         Type something in a field with random time between each letter (0.03 - 0.08 seconds)
+        @text: the text to type
+        @field: the field to type in
+        @isCommentArea: if true, we're grabbing the comment textarea element at the exact time that we want to type on it
+        @pressEnter: if true, we'll press the enter key after typing the text -> used for posting the comment
         '''
 
         try:
-            for letter in comment:
+            for letter in text:
                 # It seems like Instagram will load the commentArea textbox more than one times.
                 # To fix this, we're grabbing the element at the exact time that we want to type on it.
                 if isCommentArea:
@@ -353,6 +358,9 @@ class InstaBot:
 
                 field.send_keys(letter)
                 sleep(random.uniform(0.03, 0.08)) # input time of each letter (const one was: 0.048)
+
+            if pressEnter:
+                field.send_keys(Keys.RETURN)
         except StaleElementReferenceException as e:
             raise StaleElementReferenceException('bug')
         except:
