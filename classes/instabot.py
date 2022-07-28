@@ -219,18 +219,20 @@ class InstaBot:
         sleep(1)
 
         # input comment
+        pressEnterInComment = True
         self.logger.info('Commenting: ' + comment)
-        self.typePhrase(comment, commentArea, True, True)
+        self.typePhrase(comment, commentArea, True, pressEnterInComment)
         
         sleep(1)
-        
-        # click post button (or we could send_keys(Keys.RETURN))
-        # self.logger.debug('Clicking the "Post" button...')
-        # try:
-        #     ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/div[contains(text(), "Post")]'))).click()
-        #     # ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(@data-testid, "post-comment-input-button")]'))).click()
-        # except:
-        #     raise Exception('Could not find the "Post" button.')
+
+        # click post button if we did not already press enter while typing the comment
+        if not pressEnterInComment:
+          self.logger.debug('Clicking the "Post" button...')
+          try:
+              ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/div[contains(text(), "Post")]'))).click()
+              # ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(@data-testid, "post-comment-input-button")]'))).click()
+          except:
+              raise Exception('Could not find the "Post" button.')
 
         sleep(1.5)
 
@@ -360,6 +362,7 @@ class InstaBot:
                 sleep(random.uniform(0.03, 0.08)) # input time of each letter (const one was: 0.048)
 
             if pressEnter:
+                sleep(random.uniform(0.03, 0.08)) # input time of each letter (const one was: 0.048)
                 field.send_keys(Keys.RETURN)
         except StaleElementReferenceException as e:
             raise StaleElementReferenceException('bug')
