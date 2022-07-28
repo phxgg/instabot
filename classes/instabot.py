@@ -36,7 +36,7 @@ class InstaBot:
         self.chrome_options.add_argument('--disable-extensions')
         self.chrome_options.add_argument('--start-maximized') # works on Windows
         # self.chrome_options.add_argument('--start-fullscreen') # works on Mac (maybe not necessary)
-        # self.chrome_options.add_argument('--headless')
+        self.chrome_options.add_argument('--headless')
         self.chrome_options.add_argument('--lang=en-US')
         self.chrome_options.add_argument('--disable-gpu')
         self.chrome_options.add_argument('--mute-audio')
