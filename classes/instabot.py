@@ -208,10 +208,10 @@ class InstaBot:
         # Instagram might load the commentArea more than one times, so we might get an exception at the first try.
         self.logger.debug('Looking for the comment textarea & clicking on it...')
         try:
-            commentArea = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment")]')))
+            commentArea = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment…")]')))
             commentArea.click()
         except StaleElementReferenceException as e:
-            commentArea = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment")]')))
+            commentArea = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment…")]')))
             commentArea.click()
         except:
             raise Exception('Could not find the comment textarea.')
