@@ -33,4 +33,4 @@ class Updater:
             return 'error'
 
     def update(self):
-        print("Self-updating is under construction.")
+        print('Self-updating is under construction.')

@@ -62,10 +62,12 @@ ZIP the `dist` folder.
 This could be because of Instagram auto sending the current region language. *Might* have been fixed already, not tested.
 
 # ToDo
-* Set browser locale to English (`en_US`) with ChromeDriver.
+* Display a message when ChromeDriver and Chrome versions don't match.
+* Restart the script if it crashes.
 * Self-updating application.
 * Support for Firefox browser.
 * Option to get tags from followings/followers instead of using `tags.txt`.
+* <s>Set browser locale to English (`en_US`) with ChromeDriver.</s>
 * <s>Auto download ChromeDriver binaries if it does not exist.</s>
 * <s>Cross-platform availability.</s>
 * <s>Create a `start()` method in the `InstaBot` class and do the work there.</s>

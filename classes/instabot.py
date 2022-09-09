@@ -19,6 +19,10 @@ class InstaBot:
     counter = None
     driver = None
 
+    # update these regularly to avoid detection
+    min_time_between_letters = 0.03
+    max_time_between_letters = 0.09
+
     def __init__(self, config):
         '''
         The constructor will initialize all the variables and start the driver.
@@ -359,10 +363,10 @@ class InstaBot:
                     field = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment")]')))
 
                 field.send_keys(letter)
-                sleep(random.uniform(0.03, 0.08)) # input time of each letter (const one was: 0.048)
+                sleep(random.uniform(self.min_time_between_letters, self.max_time_between_letters)) # input time of each letter (const one was: 0.048)
 
             if pressEnter:
-                sleep(random.uniform(0.03, 0.08)) # input time of each letter (const one was: 0.048)
+                sleep(random.uniform(self.min_time_between_letters, self.max_time_between_letters))
                 field.send_keys(Keys.RETURN)
         except StaleElementReferenceException as e:
             raise StaleElementReferenceException('bug')

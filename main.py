@@ -11,7 +11,7 @@ Use this at your own risk.
 
 import atexit
 import os
-import sys
+# import sys
 
 from classes.helper import Helper
 from classes.config import Config
@@ -29,27 +29,33 @@ enable = updater.isUpdated()
 
 # Pause app when exiting so it shows the exception error if thrown
 def exit_handler():
-    #sys.stdout.close()
+    # sys.stdout.close()
 
     if Helper.getPlatform() == 'win32':
         os.system('pause')
 
-atexit.register(exit_handler)
 
-if enable:
-    my_bot = None
-    
-    try:
-        # initialize bot
-        my_bot = InstaBot(config)
+def main():
+    atexit.register(exit_handler)
 
-        # prepare & start bot
-        my_bot.prepare()
-        my_bot.start()
-    except KeyboardInterrupt as e:
-        print('[KeyboardInterrupt] Early termination of InstaBot.')
-    except Exception as e:
-        print('[Exception]')
-        print(str(e))
-    finally:
-        Helper.exitApp('[EXIT InstaBot]', [my_bot.counter.count_comments_file], my_bot)
+    if enable:
+        my_bot = None
+
+        try:
+            # initialize bot
+            my_bot = InstaBot(config)
+
+            # prepare & start bot
+            my_bot.prepare()
+            my_bot.start()
+        except KeyboardInterrupt as e:
+            print('[KeyboardInterrupt] Early termination of InstaBot.')
+        except Exception as e:
+            print('[Exception]')
+            print(str(e))
+        finally:
+            Helper.exitApp('[EXIT InstaBot]', [my_bot.counter.count_comments_file], my_bot)
+
+
+if __name__ == '__main__':
+    main()
