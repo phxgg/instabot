@@ -11,7 +11,7 @@ Works great on multi-participation allowed giveaways.
 
 # How to use
 1. Rename `config-sample.json` to `config.json` and `tags-sample.txt` to `tags.txt` inside the `config` folder.
-2. In your `tags.txt` file, each line should be an Instagram username for your tag list. <b>Make sure to NOT have any empty lines.</b>
+2. In your `tags.txt` file, each line should be an Instagram username for your tag list. <b>Make sure there are NO empty lines.</b>
 3. In `config.json` complete the following fields:<br>
     * `username` Your instagram username.
     * `password` Your instagram password.
@@ -23,6 +23,7 @@ Works great on multi-participation allowed giveaways.
     * `keep_comment_logs` Create a `comments.log` file that keeps logs of all your comments (<b>recommended:</b> `true`). 
 
 <u><b>Notes:</b></u>
+
 * You need to have 2FA disabled on your Instagram account.
 * The more tags you use, the safer your account will be.
 This is because Instagram will limit accounts that make the same comment over and over again,
@@ -63,10 +64,15 @@ This could be because of Instagram auto sending the current region language. *Mi
 
 # ToDo
 * Display a message when ChromeDriver and Chrome versions don't match.
+
 * Restart the script if it crashes.
+
 * Self-updating application.
+
 * Support for Firefox browser.
+
 * Option to get tags from followings/followers instead of using `tags.txt`.
+
 * <s>Set browser locale to English (`en_US`) with ChromeDriver.</s>
 * <s>Auto download ChromeDriver binaries if it does not exist.</s>
 * <s>Cross-platform availability.</s>

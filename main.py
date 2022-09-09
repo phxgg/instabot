@@ -54,7 +54,7 @@ def main():
             print('[Exception]')
 
             if 'This version of ChromeDriver only supports Chrome version' in str(e):
-                print('[ERROR] Please update your Chrome browser.')
+                print('[ERROR] UPDATE NEEDED: Please delete the "bin" folder and update your Chrome browser.')
 
             # print(str(e))
         finally:
