@@ -52,9 +52,13 @@ def main():
             print('[KeyboardInterrupt] Early termination of InstaBot.')
         except Exception as e:
             print('[Exception]')
-            print(str(e))
+
+            if 'This version of ChromeDriver only supports Chrome version' in str(e):
+                print('[ERROR] Please update your Chrome browser.')
+
+            # print(str(e))
         finally:
-            Helper.exitApp('[EXIT InstaBot]', [my_bot.counter.count_comments_file], my_bot)
+            Helper.exitApp('[EXIT InstaBot]', [my_bot.counter.count_comments_file] if my_bot != None else None, my_bot)
 
 
 if __name__ == '__main__':

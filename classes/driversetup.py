@@ -13,7 +13,7 @@ class DriverSetup:
         if not self.driverExists():
             self.downloadDriver()
 
-    def driverExists(self):
+    def driverExists(self) -> bool:
 
         # do md5sum check here
 
@@ -21,7 +21,7 @@ class DriverSetup:
             return False
         return True
 
-    def getLatestVersion(self):
+    def getLatestVersion(self) -> str:
         try:
             url = 'https://chromedriver.storage.googleapis.com/LATEST_RELEASE'
             r = requests.get(url)
@@ -29,7 +29,7 @@ class DriverSetup:
         except:
             raise Exception('[DriverSetup] getLatestVersion() error')
 
-    def downloadDriver(self):
+    def downloadDriver(self) -> None:
         zipFile = ''
         if Helper.getPlatform() == 'linux' or Helper.getPlatform() == 'linux2':
             zipFile = 'chromedriver_linux64.zip'

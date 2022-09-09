@@ -2,7 +2,7 @@ import sys
 import json
 
 class Config:
-    def __init__(self, configJson):
+    def __init__(self, configJson: str):
         try:
             with open(configJson) as f_config:
                 data = json.load(f_config)

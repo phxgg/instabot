@@ -68,7 +68,7 @@ class InstaBot:
         self.logger.debug('navigator.userAgent: ' + self.driver.execute_script('return navigator.userAgent'))
         self.logger.debug('navigator.webdriver: ' + str(self.driver.execute_script('return navigator.webdriver')))
 
-    def prepare(self):
+    def prepare(self) -> None:
         # check if url is an instagram link
         self.checkIfInstagram()
         
@@ -159,7 +159,7 @@ class InstaBot:
 
         sleep(3)
 
-    def start(self):
+    def start(self) -> None:
         while True:
             # hour break
             if self.counter.hour_break_comments >= self.config.per_hour_comments:
@@ -189,7 +189,7 @@ class InstaBot:
             self.counter.count_comments_file.flush() # these two lines will make sure the file is saved & updated even if an error occurs
             os.fsync(self.counter.count_comments_file.fileno())
 
-    def comment(self):
+    def comment(self) -> None:
         # clone the global tags variable
         tags = list(self.config.tags)
 
@@ -260,7 +260,7 @@ class InstaBot:
         if 'instagram.com' not in self.config.ig_post_url:
             raise Exception('Not an Instagram URL.')
 
-    def getRandomTag(self, tags):
+    def getRandomTag(self, tags: list) -> str:
         '''
         Return a random username from the tags.txt
         '''
@@ -270,7 +270,7 @@ class InstaBot:
         tags.remove(tag) # delete tag from the temporary variable. We do not want to show the same tag more than once
         return tag
 
-    def suspiciousLoginAttempt(self):
+    def suspiciousLoginAttempt(self) -> bool:
         '''
         Return true if a "suspicious login attempt" message has been received.
         '''
@@ -292,7 +292,7 @@ class InstaBot:
 
         return flag
 
-    def canLogin(self):
+    def canLogin(self) -> bool:
         '''
         Return true if no error has been received during the login attempt.
         '''
@@ -303,7 +303,7 @@ class InstaBot:
             return True
         return False
 
-    def validPostURL(self):
+    def validPostURL(self) -> bool:
         '''
         Return true if the Post URL exists.
         '''
@@ -314,7 +314,7 @@ class InstaBot:
             return True
         return False
 
-    def commentPosted(self):
+    def commentPosted(self) -> bool:
         '''
         Return true if the comment was successfully posted and no errors were received.
         '''
@@ -346,7 +346,7 @@ class InstaBot:
             return False
         return True
 
-    def typePhrase(self, text, field, isCommentArea = False, pressEnter = False):
+    def typePhrase(self, text: str, field, isCommentArea: bool = False, pressEnter: bool = False) -> None:
         '''
         Type something in a field with random time between each letter (0.03 - 0.08 seconds)
         @text: the text to type
@@ -369,11 +369,11 @@ class InstaBot:
                 sleep(random.uniform(self.min_time_between_letters, self.max_time_between_letters))
                 field.send_keys(Keys.RETURN)
         except StaleElementReferenceException as e:
-            raise StaleElementReferenceException('bug')
+            raise StaleElementReferenceException('[InstaBot] typePhrase(): bug')
         except:
             raise Exception('[InstaBot] typePhrase(): Something went wrong.')
 
-    def quit(self):
+    def quit(self) -> None:
         '''
         Quit the driver.
         '''

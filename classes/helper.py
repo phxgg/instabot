@@ -4,14 +4,14 @@ import hashlib
 
 class Helper:
     @staticmethod
-    def safe_execute(default, exception, function, *args):
+    def safe_execute(default, exception: Exception, function, *args):
         try:
             return function(*args)
         except exception:
             return default
 
     @staticmethod
-    def exitApp(msg = None, openFiles = [], igBot = None):
+    def exitApp(msg: str = None, openFiles: list = [], igBot = None) -> None:
         if openFiles:
             for f in openFiles:
                 #f.close()
@@ -21,11 +21,11 @@ class Helper:
         sys.exit(msg if msg else 0)
 
     @staticmethod
-    def getPlatform():
+    def getPlatform() -> str:
         return sys.platform
         
     @staticmethod
-    def getDriverName():
+    def getDriverName() -> str:
         driver_file_name = ''
 
         if Helper.getPlatform() == 'linux' or Helper.getPlatform() == 'linux2':
@@ -38,11 +38,11 @@ class Helper:
         return driver_file_name
 
     @staticmethod
-    def getDriverPath():
+    def getDriverPath() -> str:
         return os.path.join(os.getcwd(), 'bin', Helper.getDriverName())
         
     @staticmethod
-    def getUserAgent():
+    def getUserAgent() -> str:
         ua = ''
 
         if Helper.getPlatform() == 'linux' or Helper.getPlatform == 'linux2':
@@ -55,7 +55,7 @@ class Helper:
         return ua
 
     @staticmethod
-    def md5sum(filepath):
+    def md5sum(filepath) -> str:
         md5_hash = hashlib.md5()
 
         f = open(filepath, 'rb')

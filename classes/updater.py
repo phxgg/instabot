@@ -19,18 +19,18 @@ class Updater:
             print('[*] Latest version: ' + self.latest_version)
             self.update()
 
-    def isUpdated(self):
+    def isUpdated(self) -> bool:
         latest_version = self.latest_version
         if VERSION != latest_version:
             return False
         return True
 
-    def getLatestVersion(self):
+    def getLatestVersion(self) -> str:
         try:
             r = requests.get(VERSION_URL)
             return r.text
         except:
             return 'error'
 
-    def update(self):
+    def update(self) -> None:
         print('Self-updating is under construction.')
