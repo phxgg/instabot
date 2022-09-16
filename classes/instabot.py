@@ -19,9 +19,12 @@ class InstaBot:
     counter = None
     driver = None
 
+    is_already_in_post = False
+
     # update these regularly to avoid detection
     min_time_between_letters = 0.03
-    max_time_between_letters = 0.09
+    max_time_between_letters = 0.12
+    plus_time_in_sleep = 1
 
     def __init__(self, config):
         '''
@@ -73,14 +76,14 @@ class InstaBot:
         self.checkIfInstagram()
         
         # get instagram post
-        self.logger.debug('Getting the Instagram post URL...')
+        self.logger.debug('Locating to instagram.com ...')
         try:
             self.driver.get('https://instagram.com')
             # self.driver.get(self.config.ig_post_url)
         except:
             raise Exception('Could not open the link.')
 
-        sleep(2)
+        sleep(2 + self.plus_time_in_sleep)
 
         # click accept cookies
         self.logger.debug('Clicking "Accept" button on the cookies message...')
@@ -89,7 +92,7 @@ class InstaBot:
         except:
             raise Exception('Could not find the "Accept" cookies button.')
 
-        sleep(5)
+        sleep(5 + self.plus_time_in_sleep)
         
         # check if the Post URL is valid
         self.logger.debug('Validating post URL...')
@@ -110,7 +113,7 @@ class InstaBot:
         except:
             raise Exception('Could not redirect to the Login page.')
 
-        sleep(3)
+        sleep(3 + self.plus_time_in_sleep)
 
         # input username & password and click the login button
         self.logger.debug('Looking for the username & password fields')
@@ -130,7 +133,7 @@ class InstaBot:
         except:
             raise Exception('Could not find "submit" button to login.')
             
-        sleep(5)
+        sleep(5 + self.plus_time_in_sleep)
 
         # check if the account has been locked. If so, we have to wait for some time to re-try logging in
         if not self.canLogin():
@@ -146,18 +149,19 @@ class InstaBot:
             #self.logger.error('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
             #Helper.exitApp('Suspicious Login Attempt found', [self.counter.count_comments_file], self)
 
-        # redirect to instagram post url in case "One Tap" box shows up
-        self.logger.debug('Redirecting to Instagram post URL...')
-        try:
-            self.driver.get(self.config.ig_post_url)
-        except:
-            raise Exception('Could not open the link.')
+        ''' not sure bout this, could be unnecessary '''
+        # redirect to instagram post url in case "One Tap" box shows up (unnecessary?)
+        # self.logger.debug('Redirecting to Instagram post URL...')
+        # try:
+        #     self.driver.get(self.config.ig_post_url)
+        # except:
+        #     raise Exception('Could not open the link.')
 
         # bypass One Tap when logged in
         #self.logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')
         #self.driver.find_element_by_xpath('//button[contains(text(), "Not Now")]').click()
 
-        sleep(3)
+        sleep(3 + self.plus_time_in_sleep)
 
     def start(self) -> None:
         while True:
@@ -167,6 +171,7 @@ class InstaBot:
                 self.counter.minute_break_comments = 0
                 self.counter.hour_break_comments = 0
                 sleep(3600) # 1 hour
+                self.is_already_in_post = False # refresh the page
 
             # minute break
             if self.counter.minute_break_comments >= self.config.session_comments:
@@ -201,12 +206,13 @@ class InstaBot:
         # find instagram post
         self.checkIfInstagram()
 
-        try:
-            self.driver.get(self.config.ig_post_url)
-        except:
-            raise Exception('Could not open the link.')
+        if not self.is_already_in_post:
+            try:
+                self.driver.get(self.config.ig_post_url)
+            except:
+                raise Exception('Could not open the link.')
 
-        sleep(2)
+        sleep(2 + self.plus_time_in_sleep)
 
         # get comment textarea and click on the input box.
         # Instagram might load the commentArea more than one times, so we might get an exception at the first try.
@@ -220,25 +226,24 @@ class InstaBot:
         except:
             raise Exception('Could not find the comment textarea.')
 
-        sleep(1)
+        sleep(1 + self.plus_time_in_sleep)
 
         # input comment
         pressEnterInComment = True
         self.logger.info('Commenting: ' + comment)
         self.typePhrase(comment, commentArea, True, pressEnterInComment)
         
-        sleep(1)
+        sleep(1 + self.plus_time_in_sleep)
 
         # click post button if we did not already press enter while typing the comment
         if not pressEnterInComment:
           self.logger.debug('Clicking the "Post" button...')
           try:
               ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/div[contains(text(), "Post")]'))).click()
-              # ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(@data-testid, "post-comment-input-button")]'))).click()
           except:
               raise Exception('Could not find the "Post" button.')
 
-        sleep(1.5)
+        sleep(1.5 + self.plus_time_in_sleep)
 
         # check if post was successfully commented. Otherwise wait for 1 hour to kinda refresh the rate
         if not self.commentPosted():
@@ -250,7 +255,7 @@ class InstaBot:
             self.counter.comments_counter = self.counter.comments_counter + 1
 
         #self.driver.execute_script("document.evaluate(\"//button[contains(text(), 'Post')]\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.removeAttribute(\"disabled\");")
-        #sleep(2)
+        #sleep(2 + self.plus_time_in_sleep)
     
     def checkIfInstagram(self):
         '''

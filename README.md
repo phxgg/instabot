@@ -64,6 +64,8 @@ This could be because of Instagram auto sending the current region language. *Mi
 
 # ToDo
 
+* **429 error workaround:** Navigate to post through the Instagram UI instead of directly going to the URL. Also stop refreshing each time we post.
+
 * Restart the script if it crashes.
 
 * Self-updating application.

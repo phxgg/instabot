@@ -11,7 +11,7 @@ Use this at your own risk.
 
 import atexit
 import os
-# import sys
+import sys
 
 from classes.helper import Helper
 from classes.config import Config
@@ -30,6 +30,9 @@ enable = updater.isUpdated()
 # Pause app when exiting so it shows the exception error if thrown
 def exit_handler():
     # sys.stdout.close()
+
+    ''' Restart script on error. Disabled for now because it'll cause too many requests (error code 429) '''
+    # os.system('python {}'.format(os.path.abspath(__file__)))
 
     if Helper.getPlatform() == 'win32':
         os.system('pause')
@@ -52,7 +55,7 @@ def main():
             print('[KeyboardInterrupt] Early termination of InstaBot.')
         except Exception as e:
             print('[Exception]')
-            
+
             if 'This version of ChromeDriver only supports Chrome version' in str(e):
                 print('[ERROR] UPDATE NEEDED: Please delete the "bin" folder and update your Chrome browser.')
             else:
