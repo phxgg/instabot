@@ -63,7 +63,6 @@ ZIP the `dist` folder.
 This could be because of Instagram auto sending the current region language. *Might* have been fixed already, not tested.
 
 # ToDo
-* Display a message when ChromeDriver and Chrome versions don't match.
 
 * Restart the script if it crashes.
 
@@ -73,6 +72,7 @@ This could be because of Instagram auto sending the current region language. *Mi
 
 * Option to get tags from followings/followers instead of using `tags.txt`.
 
+* <s>Display a message when ChromeDriver and Chrome versions don't match.</s>
 * <s>Set browser locale to English (`en_US`) with ChromeDriver.</s>
 * <s>Auto download ChromeDriver binaries if it does not exist.</s>
 * <s>Cross-platform availability.</s>

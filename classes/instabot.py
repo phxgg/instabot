@@ -89,7 +89,7 @@ class InstaBot:
         except:
             raise Exception('Could not find the "Accept" cookies button.')
 
-        sleep(2)
+        sleep(5)
         
         # check if the Post URL is valid
         self.logger.debug('Validating post URL...')
