@@ -229,7 +229,7 @@ class InstaBot:
         sleep(1 + self.plus_time_in_sleep)
 
         # input comment
-        pressEnterInComment = True
+        pressEnterInComment = False
         self.logger.info('Commenting: ' + comment)
         self.typePhrase(comment, commentArea, True, pressEnterInComment)
         
@@ -243,7 +243,7 @@ class InstaBot:
           except:
               raise Exception('Could not find the "Post" button.')
 
-        sleep(1.5 + self.plus_time_in_sleep)
+        sleep(4 + self.plus_time_in_sleep)
 
         # check if post was successfully commented. Otherwise wait for 1 hour to kinda refresh the rate
         if not self.commentPosted():
@@ -253,6 +253,8 @@ class InstaBot:
             self.logger.writeComment(comment)
             self.logger.debug('Posted successfully!')
             self.counter.comments_counter = self.counter.comments_counter + 1
+
+        self.is_already_in_post = True
 
         #self.driver.execute_script("document.evaluate(\"//button[contains(text(), 'Post')]\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.removeAttribute(\"disabled\");")
         #sleep(2 + self.plus_time_in_sleep)
@@ -361,12 +363,12 @@ class InstaBot:
         '''
 
         try:
-            for letter in text:
-                # It seems like Instagram will load the commentArea textbox more than one times.
-                # To fix this, we're grabbing the element at the exact time that we want to type on it.
-                if isCommentArea:
-                    field = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment")]')))
+            # It seems like Instagram will load the commentArea textbox more than one times.
+            # To fix this, we're grabbing the element at the exact time that we want to type on it.
+            if isCommentArea:
+                field = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment")]')))
 
+            for letter in text:
                 field.send_keys(letter)
                 sleep(random.uniform(self.min_time_between_letters, self.max_time_between_letters)) # input time of each letter (const one was: 0.048)
 
