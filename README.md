@@ -5,7 +5,7 @@ Auto commenting bot for Instagram.
 Works great on multi-participation allowed giveaways.
 
 # Requirements
-1. Install Python 3.9.13 (or later) & pip from https://www.python.org/
+1. Install Python 3.11.4 (or later) & pip from https://www.python.org/
 2. Use `pip install -r requirements.txt` inside the `main.py` folder to install the requirements.
 3. Google Chrome updated to the latest version.
 
