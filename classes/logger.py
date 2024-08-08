@@ -1,7 +1,9 @@
 import datetime
+import os
 
 class Logger:
     current_time = datetime.datetime.now()
+    commentLogs = None
 
     def __init__(self, debugEnabled: bool, keepCommentLogs: bool):
         self.debugEnabled = debugEnabled
@@ -26,6 +28,9 @@ class Logger:
     def writeComment(self, comment: str) -> None:
         if self.keepCommentLogs:
             self.commentLogs.write(comment + '\n')
+            # instantly ensure the comment is written to the file
+            self.commentLogs.flush()
+            os.fsync(self.commentLogs.fileno())
 
     def updateTime(self) -> None:
         self.current_time = datetime.datetime.now()
