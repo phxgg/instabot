@@ -5,7 +5,7 @@ Auto commenting bot for Instagram.
 Works great on multi-participation allowed giveaways.
 
 # Requirements
-1. Install Python 3.8 (or later) & pip from https://www.python.org/
+1. Install Python 3.9.13 (or later) & pip from https://www.python.org/
 2. Use `pip install -r requirements.txt` inside the `main.py` folder to install the requirements.
 3. Google Chrome updated to the latest version.
 
@@ -63,6 +63,8 @@ ZIP the `dist` folder.
 This could be because of Instagram auto sending the current region language. *Might* have been fixed already, not tested.
 
 # ToDo
+
+* `chromedriver` links have changed, need to fix this.
 
 * **429 error workaround:** Navigate to post through the Instagram UI instead of directly going to the URL. Also stop refreshing each time we post.
 

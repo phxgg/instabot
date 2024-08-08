@@ -86,11 +86,11 @@ class InstaBot:
         sleep(2 + self.plus_time_in_sleep)
 
         # click accept cookies
-        self.logger.debug('Clicking "Accept" button on the cookies message...')
+        self.logger.debug('Clicking "Allow all cookies" button on the cookies message...')
         try:
-            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Allow essential and optional cookies")]'))).click()
+            ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button[contains(text(), "Allow all cookies")]'))).click()
         except:
-            raise Exception('Could not find the "Accept" cookies button.')
+            raise Exception('Could not find the "Allow all cookies" cookies button.')
 
         sleep(5 + self.plus_time_in_sleep)
         
@@ -239,7 +239,7 @@ class InstaBot:
         if not pressEnterInComment:
           self.logger.debug('Clicking the "Post" button...')
           try:
-              ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button/div[contains(text(), "Post")]'))).click()
+              ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//div/div[contains(text(), "Post")]'))).click()
           except:
               raise Exception('Could not find the "Post" button.')
 
@@ -316,7 +316,7 @@ class InstaBot:
         '''
 
         try:
-            self.driver.find_element_by_xpath('//h2[contains(text(), "Sorry, this page isn\'t available.")]')
+            self.driver.find_element_by_xpath('//span[contains(text(), "Sorry, this page isn\'t available.")]')
         except NoSuchElementException:
             return True
         return False
