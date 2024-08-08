@@ -68,8 +68,6 @@ This could be because of Instagram auto sending the current region language. *Mi
 
 # ToDo
 
-* `chromedriver` links have changed, need to fix this.
-
 * **429 error workaround:** Navigate to post through the Instagram UI instead of directly going to the URL. Also stop refreshing each time we post.
 
 * Restart the script if it crashes.
@@ -79,14 +77,3 @@ This could be because of Instagram auto sending the current region language. *Mi
 * Support for Firefox browser.
 
 * Option to get tags from followings/followers instead of using `tags.txt`.
-
-* <s>Display a message when ChromeDriver and Chrome versions don't match.</s>
-* <s>Set browser locale to English (`en_US`) with ChromeDriver.</s>
-* <s>Auto download ChromeDriver binaries if it does not exist.</s>
-* <s>Cross-platform availability.</s>
-* <s>Create a `start()` method in the `InstaBot` class and do the work there.</s>
-* <s>Create a `Helper` class and keep certain functions there.</s>
-* <s>User-Agent selection depending on the platform.</s>
-* <s>Random time between each letter in `InstaBot.typePhrase()`</s>
-* <s>Allow user to create, inside `config.json`, the format of comment that will be used.<br>
-Example: `[tag] [tag] 42 euro size`</s>
