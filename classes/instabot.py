@@ -383,10 +383,8 @@ class InstaBot:
 
     def quit(self) -> None:
         '''
-        Quit the driver and close the commentLogs file.
+        Gracefully do the necessary cleanups.
         '''
 
         self.driver.quit()
-
-        if self.config.keep_comment_logs:
-            self.logger.commentLogs.close()
+        self.logger.close()

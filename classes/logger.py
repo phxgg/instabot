@@ -31,5 +31,9 @@ class Logger:
             # instantly ensure the comment is written to the file
             self.commentLogs.flush()
 
+    def close(self) -> None:
+        if self.keepCommentLogs:
+            self.commentLogs.close()
+
     def updateTime(self) -> None:
         self.current_time = datetime.datetime.now()
