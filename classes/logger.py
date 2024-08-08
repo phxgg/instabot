@@ -30,7 +30,6 @@ class Logger:
             self.commentLogs.write(comment + '\n')
             # instantly ensure the comment is written to the file
             self.commentLogs.flush()
-            os.fsync(self.commentLogs.fileno())
 
     def updateTime(self) -> None:
         self.current_time = datetime.datetime.now()
