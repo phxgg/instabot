@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.support import ui
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.common.keys import Keys
@@ -44,7 +45,7 @@ class InstaBot:
         self.chrome_options.add_argument('--disable-extensions')
         self.chrome_options.add_argument('--start-maximized') # works on Windows
         # self.chrome_options.add_argument('--start-fullscreen') # works on Mac (maybe not necessary)
-        self.chrome_options.add_argument('--headless')
+        # self.chrome_options.add_argument('--headless')
         self.chrome_options.add_argument('--lang=en-US')
         self.chrome_options.add_argument('--disable-gpu')
         self.chrome_options.add_argument('--mute-audio')
@@ -63,7 +64,7 @@ class InstaBot:
         self.chrome_options.add_experimental_option('useAutomationExtension', False)
 
         self.logger.debug('Loading Chrome driver...')
-        self.driver = webdriver.Chrome(Helper.getDriverPath(), options=self.chrome_options)
+        self.driver = webdriver.Chrome(service=Service(Helper.getDriverPath()), options=self.chrome_options)
 
         # self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         self.driver.execute_cdp_cmd('Network.setUserAgentOverride', {'userAgent': Helper.getUserAgent()})
@@ -118,8 +119,8 @@ class InstaBot:
         # input username & password and click the login button
         self.logger.debug('Looking for the username & password fields')
         try:
-            unField = self.driver.find_element_by_xpath('//input[@name="username"]')
-            pwField = self.driver.find_element_by_xpath('//input[@name="password"]')
+            unField = self.driver.find_element(By.XPATH, '//input[@name="username"]')
+            pwField = self.driver.find_element(By.XPATH, '//input[@name="password"]')
         except:
             raise Exception('Could not find "username" and/or "password" elements.')
 
@@ -129,7 +130,7 @@ class InstaBot:
 
         self.logger.debug('Clicking submit...')
         try:
-            self.driver.find_element_by_xpath('//button[@type="submit"]').click()
+            self.driver.find_element(By.XPATH, '//button[@type="submit"]').click()
         except:
             raise Exception('Could not find "submit" button to login.')
             
@@ -159,7 +160,7 @@ class InstaBot:
 
         # bypass One Tap when logged in
         #self.logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')
-        #self.driver.find_element_by_xpath('//button[contains(text(), "Not Now")]').click()
+        #self.driver.find_element(By.XPATH, '//button[contains(text(), "Not Now")]').click()
 
         sleep(3 + self.plus_time_in_sleep)
 
@@ -286,13 +287,13 @@ class InstaBot:
 
         # find "Suspicious Login Attempt" text
         try:
-            self.driver.find_element_by_xpath('//p[contains(text(), "Suspicious Login Attempt")]')
+            self.driver.find_element(By.XPATH, '//p[contains(text(), "Suspicious Login Attempt")]')
             flag = True
         except:
             pass
 
         try:
-            self.driver.find_element_by_xpath('//h2[contains(text(), "We Detected An Unusual Login Attempt")]')
+            self.driver.find_element(By.XPATH, '//h2[contains(text(), "We Detected An Unusual Login Attempt")]')
             flag = True
         except:
             pass
@@ -305,7 +306,7 @@ class InstaBot:
         '''
 
         try:
-            self.driver.find_element_by_xpath('//p[@id="slfErrorAlert"]')
+            self.driver.find_element(By.XPATH, '//p[@id="slfErrorAlert"]')
         except NoSuchElementException:
             return True
         return False
@@ -316,7 +317,7 @@ class InstaBot:
         '''
 
         try:
-            self.driver.find_element_by_xpath('//span[contains(text(), "Sorry, this page isn\'t available.")]')
+            self.driver.find_element(By.XPATH, '//span[contains(text(), "Sorry, this page isn\'t available.")]')
         except NoSuchElementException:
             return True
         return False
@@ -330,21 +331,21 @@ class InstaBot:
 
         # check if Retry button exists
         try:
-            self.driver.find_element_by_xpath('//button[contains(text(), "Retry")]')
+            self.driver.find_element(By.XPATH, '//button[contains(text(), "Retry")]')
             flag = True
         except NoSuchElementException:
             pass
 
         # or check if Try Again Later dialog is shown
         try:
-            self.driver.find_element_by_xpath('//h3[contains(text(), "Try Again Later")]')
+            self.driver.find_element(By.XPATH, '//h3[contains(text(), "Try Again Later")]')
             flag = True
         except NoSuchElementException:
             pass
         
         # or check if Report a Problem button exists
         try:
-            self.driver.find_element_by_xpath('//button[contains(text(), "Report a Problem")]')
+            self.driver.find_element(By.XPATH, '//button[contains(text(), "Report a Problem")]')
             flag = True
         except NoSuchElementException:
             pass
@@ -382,7 +383,10 @@ class InstaBot:
 
     def quit(self) -> None:
         '''
-        Quit the driver.
+        Quit the driver and close the commentLogs file.
         '''
 
         self.driver.quit()
+        
+        if self.config.keep_comment_logs:
+            self.logger.commentLogs.close()
