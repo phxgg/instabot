@@ -13,4 +13,5 @@ counter.txt
 comments.log
 debug.log
 test.py
+winning_probability.py
 .DS_Store
