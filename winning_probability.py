@@ -1,8 +1,8 @@
 import math
 
 # Configuration
-total_comments = 4428 # Total comments on the post
-your_comments = 310 # Your comments
+total_comments = 4545 # Total comments on the post
+your_comments = 345 # Your comments
 winners = 3 # Number of winners
 
 def calculate_probability(total_comments, your_comments, winners):
