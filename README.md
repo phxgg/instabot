@@ -46,6 +46,10 @@ pyinstaller --clean main.py && cp -r "config-dist" "./dist/main/config" && rm -r
 ```
 
 ## PyArmor
+
+> [!WARNING]
+> PyArmor has been updated to version 8, and these instructions might not work as expected at the moment. Please refer to the [PyArmor documentation](https://pyarmor.readthedocs.io/en/latest/) for more information.
+
 * Windows
 ```
 pyarmor pack --clean main.py && Xcopy /E /I "config-dist" "./dist/main/config"
