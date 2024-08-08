@@ -1,5 +1,4 @@
 import datetime
-import os
 
 class Logger:
     current_time = datetime.datetime.now()
