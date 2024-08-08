@@ -55,14 +55,11 @@ def main():
             print('[KeyboardInterrupt] Early termination of InstaBot.')
         except Exception as e:
             print('[Exception]')
-            print(e)
 
-            # if 'This version of ChromeDriver only supports Chrome version' in str(e):
-            #     print('[ERROR] UPDATE NEEDED: Please delete the "bin" folder and update your Chrome browser.')
-            # else:
-            #     print(e)
-
-            # print(str(e))
+            if 'This version of ChromeDriver only supports Chrome version' in str(e):
+                print('[ERROR] UPDATE NEEDED: Please delete the "bin" folder and update your Chrome browser.')
+            else:
+                print(e)
         finally:
             Helper.exitApp('[EXIT InstaBot]', [my_bot.counter.count_comments_file] if my_bot != None else None, my_bot)
 
