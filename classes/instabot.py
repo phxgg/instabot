@@ -354,7 +354,7 @@ class InstaBot:
             return False
         return True
 
-    def type_phrase(self, text: str, field, isCommentArea: bool = False, pressEnter: bool = False) -> None:
+    def type_phrase(self, text: str, field, is_comment_area: bool = False, press_enter: bool = False) -> None:
         '''
         Type something in a field with random time between each letter (0.03 - 0.08 seconds)
         @text: the text to type
@@ -366,14 +366,14 @@ class InstaBot:
         try:
             # It seems like Instagram will load the commentArea textbox more than one times.
             # To fix this, we're grabbing the element at the exact time that we want to type on it.
-            if isCommentArea:
+            if is_comment_area:
                 field = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment")]')))
 
             for letter in text:
                 field.send_keys(letter)
                 sleep(random.uniform(self.min_time_between_letters, self.max_time_between_letters)) # input time of each letter (const one was: 0.048)
 
-            if pressEnter:
+            if press_enter:
                 sleep(random.uniform(self.min_time_between_letters, self.max_time_between_letters))
                 field.send_keys(Keys.RETURN)
         except StaleElementReferenceException as e:
