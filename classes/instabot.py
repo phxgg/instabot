@@ -188,12 +188,8 @@ class InstaBot:
             self.counter.minute_break_comments = self.counter.minute_break_comments + 1
             self.counter.hour_break_comments = self.counter.hour_break_comments + 1
 
-            self.counter.count_comments_file.seek(0) # get to the first index of text
-            self.counter.count_comments_file.truncate() # truncate everything after it
-            self.counter.count_comments_file.write(str(self.counter.comments_counter)) # write new comments counter
-
-            self.counter.count_comments_file.flush() # these two lines will make sure the file is saved & updated even if an error occurs
-            os.fsync(self.counter.count_comments_file.fileno())
+            # write the counter to the file
+            self.counter.write_counter()
 
     def comment(self) -> None:
         # clone the global tags variable
@@ -359,8 +355,8 @@ class InstaBot:
         Type something in a field with random time between each letter (0.03 - 0.08 seconds)
         @text: the text to type
         @field: the field to type in
-        @isCommentArea: if true, we're grabbing the comment textarea element at the exact time that we want to type on it
-        @pressEnter: if true, we'll press the enter key after typing the text -> used for posting the comment
+        @is_comment_area: if true, we're grabbing the comment textarea element at the exact time that we want to type on it
+        @press_enter: if true, we'll press the enter key after typing the text -> used for posting the comment
         '''
 
         try:
@@ -377,9 +373,9 @@ class InstaBot:
                 sleep(random.uniform(self.min_time_between_letters, self.max_time_between_letters))
                 field.send_keys(Keys.RETURN)
         except StaleElementReferenceException as e:
-            raise StaleElementReferenceException('[InstaBot] typePhrase(): bug')
+            raise StaleElementReferenceException('[InstaBot] type_phrase(): bug')
         except:
-            raise Exception('[InstaBot] typePhrase(): Something went wrong.')
+            raise Exception('[InstaBot] type_phrase(): Something went wrong.')
 
     def quit(self) -> None:
         '''
