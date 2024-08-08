@@ -25,7 +25,7 @@ from classes.instabot import InstaBot
 updater = Updater()
 driversetup = DriverSetup()
 config = Config('./config/config.json')
-enable = updater.isUpdated()
+is_updated = updater.is_updated()
 
 # Pause app when exiting so it shows the exception error if thrown
 def exit_handler():
@@ -34,14 +34,14 @@ def exit_handler():
     ''' Restart script on error. Disabled for now because it'll cause too many requests (error code 429) '''
     # os.system('python {}'.format(os.path.abspath(__file__)))
 
-    if Helper.getPlatform() == 'win32':
+    if Helper.get_platform() == 'win32':
         os.system('pause')
 
 
 def main():
     atexit.register(exit_handler)
 
-    if enable:
+    if is_updated:
         my_bot = None
 
         try:
@@ -61,7 +61,7 @@ def main():
             else:
                 print(e)
         finally:
-            Helper.exitApp('[EXIT InstaBot]', [my_bot.counter.count_comments_file] if my_bot != None else None, my_bot)
+            Helper.exit_app('[EXIT InstaBot]', [my_bot.counter.count_comments_file] if my_bot != None else None, my_bot)
 
 
 if __name__ == '__main__':

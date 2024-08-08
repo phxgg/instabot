@@ -52,7 +52,7 @@ class InstaBot:
         self.chrome_options.add_argument('--log-level=3') # hide console warnings
 
         # detection issues
-        self.chrome_options.add_argument('--user-agent=' + Helper.getUserAgent())
+        self.chrome_options.add_argument('--user-agent=' + Helper.get_user_agent())
         self.chrome_options.add_argument('--disable-blink-features=AutomationControlled')
         self.chrome_options.add_argument('--disable-dev-shm-usage')
         self.chrome_options.add_argument('--no-sandbox')
@@ -64,17 +64,17 @@ class InstaBot:
         self.chrome_options.add_experimental_option('useAutomationExtension', False)
 
         self.logger.debug('Loading Chrome driver...')
-        self.driver = webdriver.Chrome(service=Service(Helper.getDriverPath()), options=self.chrome_options)
+        self.driver = webdriver.Chrome(service=Service(Helper.get_driver_path()), options=self.chrome_options)
 
         # self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-        self.driver.execute_cdp_cmd('Network.setUserAgentOverride', {'userAgent': Helper.getUserAgent()})
+        self.driver.execute_cdp_cmd('Network.setUserAgentOverride', {'userAgent': Helper.get_user_agent()})
 
         self.logger.debug('navigator.userAgent: ' + self.driver.execute_script('return navigator.userAgent'))
         self.logger.debug('navigator.webdriver: ' + str(self.driver.execute_script('return navigator.webdriver')))
 
     def prepare(self) -> None:
         # check if url is an instagram link
-        self.checkIfInstagram()
+        self.check_if_instagram()
         
         # get instagram post
         self.logger.debug('Locating to instagram.com ...')
@@ -97,7 +97,7 @@ class InstaBot:
         
         # check if the Post URL is valid
         self.logger.debug('Validating post URL...')
-        if not self.validPostURL():
+        if not self.valid_post_url():
             raise Exception('Post URL is invalid. Please check the URL you provided in the config.')
 
         # click the button to get into Login page
@@ -125,8 +125,8 @@ class InstaBot:
             raise Exception('Could not find "username" and/or "password" elements.')
 
         self.logger.debug('Sending keys for username & password...')
-        self.typePhrase(self.config.username, unField)
-        self.typePhrase(self.config.password, pwField)
+        self.type_phrase(self.config.username, unField)
+        self.type_phrase(self.config.password, pwField)
 
         self.logger.debug('Clicking submit...')
         try:
@@ -137,7 +137,7 @@ class InstaBot:
         sleep(5 + self.plus_time_in_sleep)
 
         # check if the account has been locked. If so, we have to wait for some time to re-try logging in
-        if not self.canLogin():
+        if not self.can_login():
             self.logger.error('Cannot login! Waiting for 30 minutes. Also make sure your username & password combination is correct')
             sleep(1800)
             self.logger.info('Done waiting. Trying again...')
@@ -145,7 +145,7 @@ class InstaBot:
             self.logger.debug('Successfully logged in: ' + self.config.username)
 
         # check for Suspicious Login Attempt
-        if self.suspiciousLoginAttempt():
+        if self.suspicious_login_attempt():
             raise Exception('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
             #self.logger.error('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
             #Helper.exitApp('Suspicious Login Attempt found', [self.counter.count_comments_file], self)
@@ -202,10 +202,10 @@ class InstaBot:
         # fill in comment with comment_format
         tag_count = self.config.comment_format.count('[tag]')
         format_tag = self.config.comment_format.replace('[tag]', '{}')
-        comment = format_tag.format(*('@' + self.getRandomTag(tags) for _ in range(tag_count))) #tags[random.randint(0, len(tags)-1)]
+        comment = format_tag.format(*('@' + self.get_random_tag(tags) for _ in range(tag_count))) #tags[random.randint(0, len(tags)-1)]
 
         # find instagram post
-        self.checkIfInstagram()
+        self.check_if_instagram()
 
         if not self.is_already_in_post:
             try:
@@ -219,25 +219,25 @@ class InstaBot:
         # Instagram might load the commentArea more than one times, so we might get an exception at the first try.
         self.logger.debug('Looking for the comment textarea & clicking on it...')
         try:
-            commentArea = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment…")]')))
-            commentArea.click()
+            comment_area = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment…")]')))
+            comment_area.click()
         except StaleElementReferenceException as e:
-            commentArea = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment…")]')))
-            commentArea.click()
+            comment_area = ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//textarea[contains(@aria-label,"Add a comment…")]')))
+            comment_area.click()
         except:
             raise Exception('Could not find the comment textarea.')
 
         sleep(1 + self.plus_time_in_sleep)
 
         # input comment
-        pressEnterInComment = False
+        press_enter_in_comment = False
         self.logger.info('Commenting: ' + comment)
-        self.typePhrase(comment, commentArea, True, pressEnterInComment)
+        self.type_phrase(comment, comment_area, True, press_enter_in_comment)
         
         sleep(1 + self.plus_time_in_sleep)
 
         # click post button if we did not already press enter while typing the comment
-        if not pressEnterInComment:
+        if not press_enter_in_comment:
           self.logger.debug('Clicking the "Post" button...')
           try:
               ui.WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, '//div/div[contains(text(), "Post")]'))).click()
@@ -247,11 +247,11 @@ class InstaBot:
         sleep(4 + self.plus_time_in_sleep)
 
         # check if post was successfully commented. Otherwise wait for 1 hour to kinda refresh the rate
-        if not self.commentPosted():
+        if not self.comment_posted():
             self.logger.error('Could not post comment! Waiting for 1 hour...')
             self.counter.hour_break_comments = self.config.per_hour_comments # force an hour break
         else:
-            self.logger.writeComment(comment)
+            self.logger.log_comment(comment)
             self.logger.debug('Posted successfully!')
             self.counter.comments_counter = self.counter.comments_counter + 1
 
@@ -260,7 +260,7 @@ class InstaBot:
         #self.driver.execute_script("document.evaluate(\"//button[contains(text(), 'Post')]\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.removeAttribute(\"disabled\");")
         #sleep(2 + self.plus_time_in_sleep)
     
-    def checkIfInstagram(self):
+    def check_if_instagram(self):
         '''
         Check if the given URL is an Instagram link.
         '''
@@ -268,7 +268,7 @@ class InstaBot:
         if 'instagram.com' not in self.config.ig_post_url:
             raise Exception('Not an Instagram URL.')
 
-    def getRandomTag(self, tags: list) -> str:
+    def get_random_tag(self, tags: list) -> str:
         '''
         Return a random username from the tags.txt
         '''
@@ -278,7 +278,7 @@ class InstaBot:
         tags.remove(tag) # delete tag from the temporary variable. We do not want to show the same tag more than once
         return tag
 
-    def suspiciousLoginAttempt(self) -> bool:
+    def suspicious_login_attempt(self) -> bool:
         '''
         Return true if a "suspicious login attempt" message has been received.
         '''
@@ -300,7 +300,7 @@ class InstaBot:
 
         return flag
 
-    def canLogin(self) -> bool:
+    def can_login(self) -> bool:
         '''
         Return true if no error has been received during the login attempt.
         '''
@@ -311,7 +311,7 @@ class InstaBot:
             return True
         return False
 
-    def validPostURL(self) -> bool:
+    def valid_post_url(self) -> bool:
         '''
         Return true if the Post URL exists.
         '''
@@ -322,7 +322,7 @@ class InstaBot:
             return True
         return False
 
-    def commentPosted(self) -> bool:
+    def comment_posted(self) -> bool:
         '''
         Return true if the comment was successfully posted and no errors were received.
         '''
@@ -354,7 +354,7 @@ class InstaBot:
             return False
         return True
 
-    def typePhrase(self, text: str, field, isCommentArea: bool = False, pressEnter: bool = False) -> None:
+    def type_phrase(self, text: str, field, isCommentArea: bool = False, pressEnter: bool = False) -> None:
         '''
         Type something in a field with random time between each letter (0.03 - 0.08 seconds)
         @text: the text to type

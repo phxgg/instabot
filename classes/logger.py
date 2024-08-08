@@ -24,7 +24,7 @@ class Logger:
             self.updateTime()
             print('[DEBUG: ' + str(self.current_time.hour) + ':' + str(self.current_time.minute) + ':' + str(self.current_time.second) + '] ' + text)
 
-    def writeComment(self, comment: str) -> None:
+    def log_comment(self, comment: str) -> None:
         if self.keep_comment_logs:
             self.comment_logs_file.write(comment + '\n')
             # instantly ensure the comment is written to the file

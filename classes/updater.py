@@ -10,7 +10,7 @@ class Updater:
         print('* Checking for updates...')
 
         # TODO
-        #self.latest_version = self.getLatestVersion()
+        #self.latest_version = self.get_latest_version()
         self.latest_version = '1.0'
 
         if VERSION != self.latest_version:
@@ -19,13 +19,13 @@ class Updater:
             print('[*] Latest version: ' + self.latest_version)
             self.update()
 
-    def isUpdated(self) -> bool:
+    def is_updated(self) -> bool:
         latest_version = self.latest_version
         if VERSION != latest_version:
             return False
         return True
 
-    def getLatestVersion(self) -> str:
+    def get_latest_version(self) -> str:
         try:
             r = requests.get(VERSION_URL)
             return r.text

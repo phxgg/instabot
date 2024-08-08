@@ -12,7 +12,7 @@ class Helper:
             return default
 
     @staticmethod
-    def exitApp(msg: str = None, openFiles: list = [], igBot = None) -> None:
+    def exit_app(msg: str = None, openFiles: list = [], igBot = None) -> None:
         if openFiles:
             for f in openFiles:
                 #f.close()
@@ -22,7 +22,7 @@ class Helper:
         sys.exit(msg if msg else 0)
     
     @staticmethod
-    def getPlatform() -> str:
+    def get_platform() -> str:
         system = platform.system().lower()
 
         if system == "windows":
@@ -40,8 +40,8 @@ class Helper:
         return "unknown"
         
     @staticmethod
-    def getDriverExe() -> str:
-        platform = Helper.getPlatform()
+    def get_driver_exe() -> str:
+        platform = Helper.get_platform()
         driver_file_name = ''
 
         if platform == 'linux':
@@ -54,8 +54,8 @@ class Helper:
         return driver_file_name
     
     @staticmethod
-    def getDriverFolderPath() -> str:
-        platform = Helper.getPlatform()
+    def get_driver_folder_path() -> str:
+        platform = Helper.get_platform()
         driver_folder = ''
 
         if platform == 'linux':
@@ -70,8 +70,8 @@ class Helper:
         return driver_folder
     
     @staticmethod
-    def getDriverZipName() -> str:
-        platform = Helper.getPlatform()
+    def get_driver_zip_name() -> str:
+        platform = Helper.get_platform()
         driver_zip = ''
 
         if platform == 'linux':
@@ -86,13 +86,13 @@ class Helper:
         return driver_zip
 
     @staticmethod
-    def getDriverPath() -> str:
-        driver_folder_path = Helper.getDriverFolderPath()
-        return os.path.join(os.getcwd(), 'bin', 'chromedriver-' + driver_folder_path, Helper.getDriverExe())
+    def get_driver_path() -> str:
+        driver_folder_path = Helper.get_driver_folder_path()
+        return os.path.join(os.getcwd(), 'bin', 'chromedriver-' + driver_folder_path, Helper.get_driver_exe())
         
     @staticmethod
-    def getUserAgent() -> str:
-        platform = Helper.getPlatform()
+    def get_user_agent() -> str:
+        platform = Helper.get_platform()
         ua = ''
 
         if platform == 'linux':
