@@ -17,8 +17,8 @@ Works great on multi-participation allowed giveaways.
     * `password` Your instagram password.
     * `ig_post_url` The instagram link of the post.
     * `comment_format` What you want to comment. Each `[tag]` field will be a different tag from your tags list.
-    * `session_comments` How many comments to make before a 3 minute break happens (<b>recommended:</b> `3`)
-    * `per_hour_comments` Maximum number of comments before a 1 hour break happens. (<b>recommended:</b> `35`)
+    * `session_comments` How many comments to make before a 3 minute break happens (<b>recommended:</b> `5`)
+    * `per_hour_comments` Maximum number of comments before a 1 hour break happens. (<b>recommended:</b> `50`)
     * `debug` Show debug logs in the console (true/false) (<b>recommended:</b> `true`).
     * `keep_comment_logs` Create a `comments.log` file that keeps logs of all your comments (<b>recommended:</b> `true`). 
 
