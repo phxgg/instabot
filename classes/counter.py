@@ -23,7 +23,7 @@ class Counter:
         if self.count_comments_file:
             self.count_comments_file.seek(0) # get to the first index of text
             self.count_comments_file.truncate() # truncate everything after it
-            self.count_comments_file.write(str(self.counter.comments_counter)) # write new comments counter
+            self.count_comments_file.write(str(self.comments_counter)) # write new comments counter
 
             self.count_comments_file.flush() # these two lines will make sure the file is saved & updated even if an error occurs
             os.fsync(self.count_comments_file.fileno())
