@@ -9,7 +9,6 @@ Use this at your own risk.
 
 import atexit
 import os
-import sys
 import argparse
 
 from classes.helper import Helper
@@ -22,8 +21,6 @@ from classes.instabot import InstaBot
 
 # Global variables
 updater = Updater()
-driversetup = DriverSetup()
-config = Config('./config/config.json')
 is_updated = updater.is_updated()
 
 # Pause app when exiting so it shows the exception error if thrown
@@ -47,6 +44,9 @@ def main():
     args = parser.parse_args()
 
     if is_updated:
+        driversetup = DriverSetup()
+        config = Config('./config/config.json')
+
         my_bot = None
 
         try:
