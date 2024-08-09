@@ -243,8 +243,12 @@ class InstaBot:
         sleep(4 + self.plus_time_in_sleep)
 
         # check if post was successfully commented. Otherwise wait for 1 hour to kinda refresh the rate
-        if not self.comment_posted():
+        comment_posted = self.comment_posted()
+        if not comment_posted[0]:
             self.logger.error('Could not post comment! Waiting for 1 hour...')
+            self.logger.debug('Errors: ')
+            for error in comment_posted[1]:
+                self.logger.debug('* ' + error)
             self.counter.hour_break_comments = self.config.per_hour_comments # force an hour break
         else:
             self.logger.log_comment(comment)
@@ -318,24 +322,28 @@ class InstaBot:
             return True
         return False
 
-    def comment_posted(self) -> bool:
+    def comment_posted(self) -> tuple:
         '''
-        Return true if the comment was successfully posted and no errors were received.
+        Return a tuple with the first element being a boolean indicating if the comment was posted successfully,
+        and the second element being a list of error messages if the comment was not posted successfully.
         '''
 
         error_occurred = False
+        error_messages = []
 
-        # check if Retry button exists
+        # check if "Retry" button exists
         try:
             self.driver.find_element(By.XPATH, '//button[contains(text(), "Retry")]')
             error_occurred = True
+            error_messages.append('"Retry" button was shown')
         except NoSuchElementException:
             pass
 
-        # or check if Try Again Later dialog is shown
+        # or check if "Try Again Later" dialog is shown
         try:
             self.driver.find_element(By.XPATH, '//h3[contains(text(), "Try Again Later")]')
             error_occurred = True
+            error_messages.append('"Try Again Later" dialog was shown')
         except NoSuchElementException:
             pass
 
@@ -343,6 +351,7 @@ class InstaBot:
         try:
             self.driver.find_element(By.XPATH, '//p[contains(text(), "Couldn\'t post comment.")]')
             error_occurred = True
+            error_messages.append('"Couldn\'t post comment" message was shown')
         except NoSuchElementException:
             pass
         
@@ -350,12 +359,11 @@ class InstaBot:
         try:
             self.driver.find_element(By.XPATH, '//button[contains(text(), "Report a Problem")]')
             error_occurred = True
+            error_messages.append('"Report a Problem" button was shown')
         except NoSuchElementException:
             pass
 
-        if error_occurred:
-            return False
-        return True
+        return (not error_occurred, error_messages)
 
     def type_phrase(self, text: str, field, is_comment_area: bool = False, press_enter: bool = False) -> None:
         '''
