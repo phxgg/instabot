@@ -323,37 +323,37 @@ class InstaBot:
         Return true if the comment was successfully posted and no errors were received.
         '''
 
-        flag = False
+        error_occurred = False
 
         # check if Retry button exists
         try:
             self.driver.find_element(By.XPATH, '//button[contains(text(), "Retry")]')
-            flag = True
+            error_occurred = True
         except NoSuchElementException:
             pass
 
         # or check if Try Again Later dialog is shown
         try:
             self.driver.find_element(By.XPATH, '//h3[contains(text(), "Try Again Later")]')
-            flag = True
+            error_occurred = True
         except NoSuchElementException:
             pass
 
         # or check if "Couldn't post comment" is shown
         try:
             self.driver.find_element(By.XPATH, '//p[contains(text(), "Couldn\'t post comment.")]')
-            flag = True
+            error_occurred = True
         except NoSuchElementException:
             pass
         
         # or check if Report a Problem button exists
         try:
             self.driver.find_element(By.XPATH, '//button[contains(text(), "Report a Problem")]')
-            flag = True
+            error_occurred = True
         except NoSuchElementException:
             pass
 
-        if flag:
+        if error_occurred:
             return False
         return True
 
