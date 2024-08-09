@@ -10,6 +10,7 @@ Use this at your own risk.
 import atexit
 import os
 import sys
+import argparse
 
 from classes.helper import Helper
 from classes.config import Config
@@ -40,12 +41,17 @@ def exit_handler():
 def main():
     atexit.register(exit_handler)
 
+    # parse arguments
+    parser = argparse.ArgumentParser(description='InstaBot - by phxgg')
+    parser.add_argument('--no-headless', action='store_true', help='Run the bot in headless mode')
+    args = parser.parse_args()
+
     if is_updated:
         my_bot = None
 
         try:
             # initialize bot
-            my_bot = InstaBot(config)
+            my_bot = InstaBot(args, config)
 
             # prepare & start bot
             my_bot.prepare()

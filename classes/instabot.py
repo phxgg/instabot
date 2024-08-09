@@ -27,7 +27,7 @@ class InstaBot:
     max_time_between_letters = 0.12
     plus_time_in_sleep = 1
 
-    def __init__(self, config):
+    def __init__(self, args, config):
         '''
         The constructor will initialize all the variables and start the driver.
         '''
@@ -45,7 +45,8 @@ class InstaBot:
         self.chrome_options.add_argument('--disable-extensions')
         self.chrome_options.add_argument('--start-maximized') # works on Windows
         # self.chrome_options.add_argument('--start-fullscreen') # works on Mac (maybe not necessary)
-        self.chrome_options.add_argument('--headless')
+        if not args.no_headless:
+            self.chrome_options.add_argument('--headless')
         self.chrome_options.add_argument('--lang=en-US')
         self.chrome_options.add_argument('--disable-gpu')
         self.chrome_options.add_argument('--mute-audio')
