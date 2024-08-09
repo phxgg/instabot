@@ -6,7 +6,7 @@ import shutil
 import tempfile
 from pathlib import Path
 
-VERSION = '1.0.1'
+VERSION = '1.0.4'
 VERSION_URL = 'https://dl.dropbox.com/scl/fi/mbnqfefdcxjj8l131lswf/version.json?rlkey=wm4rkenk13uagygmfy3iaf097&dl=0'
 APP_DIR = Path(sys.executable).parent # Directory where your app is installed
 UPDATE_DIR = APP_DIR / "update" # Temporary update directory
@@ -107,7 +107,7 @@ class Updater:
             # Path for the batch file
             bat_path = APP_DIR / 'update.bat'
 
-            with open(bat_path, "w") as bat_file:
+            with open(bat_path, 'w', encoding='utf-8') as bat_file:
                 bat_file.write(f"@echo off\n")
                 bat_file.write(f"timeout /t 2 /nobreak\n")  # Wait for 2 seconds
 
