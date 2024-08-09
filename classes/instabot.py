@@ -25,7 +25,7 @@ class InstaBot:
     # update these regularly to avoid detection
     min_time_between_letters = 0.03
     max_time_between_letters = 0.12
-    plus_time_in_sleep = 1
+    extra_time_in_sleep = 1
 
     def __init__(self, args, config):
         '''
@@ -85,7 +85,7 @@ class InstaBot:
         except:
             raise Exception('Could not open the link.')
 
-        sleep(2 + self.plus_time_in_sleep)
+        sleep(2 + self.extra_time_in_sleep)
 
         # click accept cookies
         self.logger.debug('Clicking "Allow all cookies" button on the cookies message...')
@@ -94,7 +94,7 @@ class InstaBot:
         except:
             raise Exception('Could not find the "Allow all cookies" cookies button.')
 
-        sleep(5 + self.plus_time_in_sleep)
+        sleep(5 + self.extra_time_in_sleep)
         
         # check if the Post URL is valid
         self.logger.debug('Validating post URL...')
@@ -115,7 +115,7 @@ class InstaBot:
         except:
             raise Exception('Could not redirect to the Login page.')
 
-        sleep(3 + self.plus_time_in_sleep)
+        sleep(3 + self.extra_time_in_sleep)
 
         # input username & password and click the login button
         self.logger.debug('Looking for the username & password fields')
@@ -135,7 +135,7 @@ class InstaBot:
         except:
             raise Exception('Could not find "submit" button to login.')
             
-        sleep(5 + self.plus_time_in_sleep)
+        sleep(5 + self.extra_time_in_sleep)
 
         # check if the account has been locked. If so, we have to wait for some time to re-try logging in
         if not self.can_login():
@@ -163,7 +163,7 @@ class InstaBot:
         #self.logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')
         #self.driver.find_element(By.XPATH, '//button[contains(text(), "Not Now")]').click()
 
-        sleep(3 + self.plus_time_in_sleep)
+        sleep(3 + self.extra_time_in_sleep)
 
     def start(self) -> None:
         while True:
@@ -210,7 +210,7 @@ class InstaBot:
             except:
                 raise Exception('Could not open the link.')
 
-        sleep(2 + self.plus_time_in_sleep)
+        sleep(2 + self.extra_time_in_sleep)
 
         # get comment textarea and click on the input box.
         # Instagram might load the commentArea more than one times, so we might get an exception at the first try.
@@ -224,14 +224,14 @@ class InstaBot:
         except:
             raise Exception('Could not find the comment textarea.')
 
-        sleep(1 + self.plus_time_in_sleep)
+        sleep(1 + self.extra_time_in_sleep)
 
         # input comment
         press_enter_in_comment = False
         self.logger.info('Commenting: ' + comment)
         self.type_phrase(comment, comment_area, True, press_enter_in_comment)
         
-        sleep(1 + self.plus_time_in_sleep)
+        sleep(1 + self.extra_time_in_sleep)
 
         # click post button if we did not already press enter while typing the comment
         if not press_enter_in_comment:
@@ -241,7 +241,7 @@ class InstaBot:
           except:
               raise Exception('Could not find the "Post" button.')
 
-        sleep(4 + self.plus_time_in_sleep)
+        sleep(4 + self.extra_time_in_sleep)
 
         # check if post was successfully commented. Otherwise wait for 1 hour to kinda refresh the rate
         comment_posted = self.comment_posted()
