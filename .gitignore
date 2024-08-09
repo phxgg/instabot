@@ -7,7 +7,8 @@ __pycache__/
 .vscode/
 config/config.json
 config/tags.txt
-config/tags.old.txt
+config/tags.*.txt
+config/config.*.json
 classes/__pycache__
 counter.txt
 comments.log

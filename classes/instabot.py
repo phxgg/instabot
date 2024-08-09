@@ -45,7 +45,7 @@ class InstaBot:
         self.chrome_options.add_argument('--disable-extensions')
         self.chrome_options.add_argument('--start-maximized') # works on Windows
         # self.chrome_options.add_argument('--start-fullscreen') # works on Mac (maybe not necessary)
-        self.chrome_options.add_argument('--headless')
+        # self.chrome_options.add_argument('--headless')
         self.chrome_options.add_argument('--lang=en-US')
         self.chrome_options.add_argument('--disable-gpu')
         self.chrome_options.add_argument('--mute-audio')
@@ -335,6 +335,13 @@ class InstaBot:
         # or check if Try Again Later dialog is shown
         try:
             self.driver.find_element(By.XPATH, '//h3[contains(text(), "Try Again Later")]')
+            flag = True
+        except NoSuchElementException:
+            pass
+
+        # or check if "Couldn't post comment" is shown
+        try:
+            self.driver.find_element(By.XPATH, '//p[contains(text(), "Couldn\'t post comment.")]')
             flag = True
         except NoSuchElementException:
             pass
