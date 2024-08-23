@@ -44,32 +44,3 @@ pyinstaller --clean main.py && Xcopy /E /I "config-dist" "./dist/main/config" &&
 ```
 pyinstaller --clean main.py && cp -r "config-dist" "./dist/main/config" && rm -rf main.spec
 ```
-
-## PyArmor
-
-> [!WARNING]
-> PyArmor has been updated to version 8, and these instructions might not work as expected at the moment. Please refer to the [PyArmor documentation](https://pyarmor.readthedocs.io/en/latest/) for more information.
-
-* Windows
-```
-pyarmor pack --clean main.py && Xcopy /E /I "config-dist" "./dist/main/config"
-```
-
-* macOS
-```
-pyarmor pack --clean main.py && cp -r "config-dist" "./dist/main/config"
-```
-
-ZIP the `dist` folder.
-
-# ToDo
-
-* **429 error workaround:** Navigate to post through the Instagram UI instead of directly going to the URL. Also stop refreshing each time we post.
-
-* Restart the script if it crashes.
-
-* Self-updating application.
-
-* Support for Firefox browser.
-
-* Option to get tags from followings/followers instead of using `tags.txt`.
