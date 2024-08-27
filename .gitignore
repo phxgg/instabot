@@ -2,14 +2,14 @@ build/
 dist/
 bin/
 
-__pycache__/
-1not_used/
+**/__pycache__/
 .vscode/
+
 config/config.json
 config/tags.txt
 config/tags.*.txt
 config/config.*.json
-classes/__pycache__
+
 counter.txt
 comments.log
 debug.log
