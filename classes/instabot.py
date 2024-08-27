@@ -59,6 +59,7 @@ class InstaBot:
         self.chrome_options.add_argument('--no-sandbox')
         self.chrome_options.add_argument('--ignore-certificate-errors')
         self.chrome_options.add_argument('--allow-running-insecure-content')
+        self.chrome_options.add_argument('--disable-search-engine-choice-screen')
 
         self.chrome_options.add_experimental_option('prefs', {'intl.accept_languages': 'en,en_US'})
         self.chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
