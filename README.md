@@ -47,10 +47,10 @@ pyinstaller --clean --onefile main.py && Xcopy /E /I "config-dist" "./dist/confi
 
 * macOS
 ```
-pyinstaller --clean main.py && cp -r "config-dist" "./dist/main/config" && rm -rf main.spec
+rm -rf dist build && pyinstaller --clean main.py && cp -r "config-dist" "./dist/main/config" && rm -rf main.spec
 ```
 
 Or build into a single executable with:
 ```
-pyinstaller --clean --onefile main.py && cp -r "config-dist" "./dist/config" && rm -rf main.spec
+rm -rf dist build && pyinstaller --clean --onefile main.py && cp -r "config-dist" "./dist/config" && rm -rf main.spec
 ```

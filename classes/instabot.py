@@ -139,6 +139,10 @@ class InstaBot:
             
         sleep(5 + self.extra_time_in_sleep)
 
+        # check if login was not successful
+        if self.login_error_present():
+            raise Exception('Login error present! Please make sure your username & password combination is correct.')
+
         # check if the account has been locked. If so, we have to wait for some time to re-try logging in
         if not self.can_login():
             self.logger.error('Cannot login! Waiting for 30 minutes. Also make sure your username & password combination is correct')
@@ -297,6 +301,22 @@ class InstaBot:
 
         try:
             self.driver.find_element(By.XPATH, '//h2[contains(text(), "We Detected An Unusual Login Attempt")]')
+            flag = True
+        except:
+            pass
+
+        return flag
+
+    def login_error_present(self) -> bool:
+        '''
+        Return true if a login error message has been received.
+        '''
+
+        flag = False
+
+        # find "Sorry, your password was incorrect. Please double-check your password." text
+        try:
+            self.driver.find_element(By.XPATH, '//div[contains(text(), "Sorry, your password was incorrect. Please double-check your password.")]')
             flag = True
         except:
             pass
