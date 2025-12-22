@@ -66,6 +66,7 @@ class InstaBot:
         self.chrome_options.add_experimental_option('useAutomationExtension', False)
 
         self.logger.debug('Loading Chrome driver...')
+        # self.logger.debug('Driver path: ' + Helper.get_driver_path())
         self.driver = webdriver.Chrome(service=Service(Helper.get_driver_path()), options=self.chrome_options)
 
         # self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
