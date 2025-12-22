@@ -24,7 +24,7 @@ class InstaBot:
 
     # update these regularly to avoid detection
     min_time_between_letters = 0.04
-    max_time_between_letters = 0.22
+    max_time_between_letters = 0.18
     extra_time_in_sleep = 1
 
     def __init__(self, args, config):
@@ -369,7 +369,7 @@ class InstaBot:
 
     def type_phrase(self, text: str, field, is_comment_area: bool = False, press_enter: bool = False) -> None:
         '''
-        Type something in a field with random time between each letter (0.04 - 0.22 seconds)
+        Type something in a field with random time between each letter (0.04 - 0.18 seconds)
         @text: the text to type
         @field: the field to type in
         @is_comment_area: if true, we're grabbing the comment textarea element at the exact time that we want to type on it
