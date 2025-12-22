@@ -40,7 +40,17 @@ It would be best to use a legit account.
 pyinstaller --clean main.py && Xcopy /E /I "config-dist" "./dist/main/config" && del main.spec
 ```
 
+Or build into a single executable with:
+```
+pyinstaller --clean --onefile main.py && Xcopy /E /I "config-dist" "./dist/config" && del main.spec
+```
+
 * macOS
 ```
 pyinstaller --clean main.py && cp -r "config-dist" "./dist/main/config" && rm -rf main.spec
+```
+
+Or build into a single executable with:
+```
+pyinstaller --clean --onefile main.py && cp -r "config-dist" "./dist/config" && rm -rf main.spec
 ```
