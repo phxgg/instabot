@@ -23,8 +23,8 @@ class InstaBot:
     is_already_in_post = False
 
     # update these regularly to avoid detection
-    min_time_between_letters = 0.03
-    max_time_between_letters = 0.12
+    min_time_between_letters = 0.04
+    max_time_between_letters = 0.22
     extra_time_in_sleep = 1
 
     def __init__(self, args, config):
@@ -149,8 +149,8 @@ class InstaBot:
         # check for Suspicious Login Attempt
         if self.suspicious_login_attempt():
             raise Exception('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
-            #self.logger.error('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
-            #Helper.exitApp('Suspicious Login Attempt found', [self.counter.count_comments_file], self)
+            # self.logger.error('A Suspicious Login Attempt message was found. Please manually login and verify your account. Then restart the InstaBot.')
+            # Helper.exitApp('Suspicious Login Attempt found', [self.counter.count_comments_file], self)
 
         ''' not sure bout this, could be unnecessary '''
         # redirect to instagram post url in case "One Tap" box shows up (unnecessary?)
@@ -161,8 +161,8 @@ class InstaBot:
         #     raise Exception('Could not open the link.')
 
         # bypass One Tap when logged in
-        #self.logger.debug('Bypassing the "One Tap" dialog box by clicking "Not Now"...')
-        #self.driver.find_element(By.XPATH, '//button[contains(text(), "Not Now")]').click()
+        # self.logger.debug('Bypassing the "One Tap" dialog box by clicking "Not now"...')
+        # self.driver.find_element(By.XPATH, '//div/div[contains(text(), "Not now")]').click()
 
         sleep(3 + self.extra_time_in_sleep)
 
@@ -369,7 +369,7 @@ class InstaBot:
 
     def type_phrase(self, text: str, field, is_comment_area: bool = False, press_enter: bool = False) -> None:
         '''
-        Type something in a field with random time between each letter (0.03 - 0.08 seconds)
+        Type something in a field with random time between each letter (0.04 - 0.22 seconds)
         @text: the text to type
         @field: the field to type in
         @is_comment_area: if true, we're grabbing the comment textarea element at the exact time that we want to type on it
